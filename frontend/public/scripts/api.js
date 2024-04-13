@@ -7,11 +7,11 @@ export async function getItems() {
 }
 
 //add new
-export async function getCards(playerid) {
-  const cards = await fetch(`${BACKEND_URL}/players/${playerid}`).then((r) => r.json());
+// export async function getCards(playerid) {
+//   const cards = await fetch(`${BACKEND_URL}/players/${playerid}`).then((r) => r.json());
 
-  return cards;
-}
+//   return cards;
+// }
 
 
 export async function createItem(item) {
@@ -26,10 +26,18 @@ export async function createItem(item) {
 }
 
 export async function deleteItem(id, item) {
-  await fetch(`${BACKEND_URL}/items/${id}`, {
+  await fetch(`${BACKEND_URL}/players/${id}`, {
     method: "DELETE",
   });
 }
+
+export async function testUpdate(id) {
+  await fetch(`${BACKEND_URL}/players/${id}`, {
+    method: "PUT",
+  });
+}
+
+
 
 export async function filterItems(filterName, lowerPrice, upperPrice) {
   // TODO3: implement this function

@@ -40,10 +40,10 @@ export async function populateMembers() {
 
 export async function handleCreatePlayer() {
     const nameToAdd = document.getElementById("player-name-to-add");
-    const card1 = { playername: "PlayerTest", cardtype: "NumberCard2", number: 7, used: false }
-    //const cardsToAdd = [card1, card1, card1];
-    const card2 = { playername: "Apple", cardtype: "NumberCard", number: 5 }
-    const cardsToAdd = [card2, card2, card2];
+    const card1 = { playername: "PlayerTest", cardtype: "NumberCard2", number: 7, playerid: "012345" }
+    const cardsToAdd = [card1, card1, card1];
+    // const card2 = { playername: "Apple", cardtype: "NumberCard", number: 5 }
+    // const cardsToAdd = [card2, card2, card2];
 
     await createPlayer({ name: nameToAdd.value, cards: cardsToAdd });
     //await fetchAndDrawTable();

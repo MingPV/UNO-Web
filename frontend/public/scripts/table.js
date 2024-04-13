@@ -1,40 +1,45 @@
-import { createItem, deleteItem, getItems, filterItems, getCards, getPlayers } from "./api.js";
+import { createItem, deleteItem, getItems, filterItems, getPlayers, testUpdate } from "./api.js";
 
 
 function drawTable(players) {
   const table = document.getElementById("main-table-body");
 
   table.innerHTML = "";
+
+  // create array that contain member card
+
+
+
   for (const player of players) {
     const row = table.insertRow();
     row.insertCell().innerText = player.name;
 
     // just fix return value :)
-    const promise1 = getCards(player._id)
-    console.log(promise1)
-    promise1.then((value) => {
+    // const promise1 = getCards(player._id)
+    // console.log(promise1)
+    // promise1.then((value) => {
 
-      console.log(value.cards.lenght);
+    //   console.log(value.cards.lenght);
 
-      // for (let index = 0; index < value.cards.lenght; index++) {
-      //   row.insertCell().innerText = value.cards[index];
-      //   const button = document.createElement("button", id = index);
-      //   button.addEventListener("click", () => handleDeleteItem(value.cards, index));
-      //   button.innerText = "ลบ";
+    // for (let index = 0; index < value.cards.lenght; index++) {
+    //   row.insertCell().innerText = value.cards[index];
+    //   const button = document.createElement("button", id = index);
+    //   button.addEventListener("click", () => handleDeleteItem(value.cards, index));
+    //   button.innerText = "ลบ";
 
-      //   row.insertCell().appendChild(button);
+    //   row.insertCell().appendChild(button);
 
-      // }
+    // }
 
-      for (const card of value.cards) {
-        row.insertCell().innerText = card._id;
-        const button = document.createElement("button");
-        button.addEventListener("click", () => handleDeleteItem(card._id));
-        button.innerText = "ลบ";
+    //   for (const card of value.cards) {
+    //     row.insertCell().innerText = card._id;
+    //     const button = document.createElement("button");
+    //     button.addEventListener("click", () => handleDeleteItem(card._id));
+    //     button.innerText = "ลบ";
 
-        row.insertCell().appendChild(button);
-      }
-    });
+    //     row.insertCell().appendChild(button);
+    //   }
+    // });
     //row.insertCell().innerText = getCards(player._id);
 
 
@@ -47,12 +52,12 @@ function drawTable(players) {
 
     //row.insertCell().appendChild(button);
   }
+
 }
 
 export async function fetchAndDrawTable() {
   // const items = await getItems();
   // const items = await getCards();
-  console.log("test")
   const players = await getPlayers();
 
   drawTable(players);
@@ -62,7 +67,7 @@ export async function handleDeleteItem(id) {
 
   alert(id)
 
-  // await deleteItem(id);
+  await deleteItem(id);
   // await fetchAndDrawTable();
   // clearFilter();
 }
@@ -72,9 +77,14 @@ export async function handleCreateItem() {
   // const nameToAdd = document.getElementById("name-to-add");
   // const priceToAdd = document.getElementById("price-to-add");
 
+  // console.log(1);
+
   const playerNameToAdd = document.getElementById("playerName-to-add");
   const cardTypeToAdd = document.getElementById("cardType-to-add");
   const numberToAdd = document.getElementById("number-to-add");
+  const playeridToAdd = document.getElementById("playerid-to-add");
+
+
 
   const payload = {
     // item: itemToAdd.value,
@@ -83,6 +93,7 @@ export async function handleCreateItem() {
     playername: playerNameToAdd.value,
     cardtype: cardTypeToAdd.value,
     number: numberToAdd.value,
+    playerid: playeridToAdd.value,
   };
 
   await createItem(payload);
@@ -91,6 +102,7 @@ export async function handleCreateItem() {
   playerNameToAdd.value = "";
   cardTypeToAdd.value = "0";
   numberToAdd.value = "";
+  playeridToAdd.value = "";
   //clearFilter();
 }
 
@@ -116,3 +128,9 @@ export async function handleCreateItem() {
 //   const items = await filterItems(name, lowerPrice, upperPrice);
 //   await drawTable(items);
 // }
+
+export async function handleTestUpdate(id) {
+
+  console.log("ming")
+  await testUpdate(id);
+}

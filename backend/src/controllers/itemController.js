@@ -1,15 +1,16 @@
 import Item from "../models/itemModel.js";
 
 export const createItem = async (req, res) => {
-  // console.log(req.body.playername)
+  //console.log(req.body.playername)
   try {
     const newItem = new Item(req.body);
+    console.log(req.body)
     await newItem.save();
 
     res.status(200).json({ message: "OK" });
   } catch (err) {
     if (err.name === "ValidationError") {
-      res.status(400).json({ error: "Bad Request" });
+      res.status(400).json({ error: "Bad Request na" });
     } else {
       res.status(500).json({ error: "Internal server error." });
     }

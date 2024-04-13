@@ -14,6 +14,10 @@ const itemSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  playerid: {
+    type: String,
+    required: true
+  }
 });
 
 const Item = mongoose.model("Item", itemSchema);

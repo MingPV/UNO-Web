@@ -1,9 +1,8 @@
 //import { handleCreateMember, populateMembers } from "./member.js";
-import { fetchAndDrawTable, handleCreateItem } from "./table.js";
+import { fetchAndDrawTable, handleCreateItem, handleTestUpdate } from "./table.js";
 import { handleCreatePlayer } from "./player.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("test")
   fetchAndDrawTable();
 
   //populateMembers();
@@ -23,6 +22,12 @@ document.addEventListener("DOMContentLoaded", () => {
   addPlayerButton.addEventListener("click", () => {
     alert("test")
     handleCreatePlayer();
+  });
+
+  const TestUpdateButton = document.getElementById("testupdate");
+  TestUpdateButton.addEventListener("click", () => {
+    alert("testupdate")
+    handleTestUpdate("661a0283707255858bb965ba");
   });
 
   // const addMemberButton = document.getElementById("add-member");
