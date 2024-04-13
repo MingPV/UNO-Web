@@ -7,6 +7,15 @@ export async function getItems() {
   return items;
 }
 
+export async function getTopCard() {
+  //console.log("Ming")
+  const tables = await fetch(`${BACKEND_URL}/tables`).then((r) => r.json());
+
+  const topCard = tables[0]
+
+  return topCard;
+}
+
 //add new
 // export async function getCards(playerid) {
 //   const cards = await fetch(`${BACKEND_URL}/players/${playerid}`).then((r) => r.json());

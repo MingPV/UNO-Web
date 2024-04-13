@@ -1,7 +1,7 @@
-import { createItem, deleteItem, getItems, filterItems, getPlayers, testUpdate, createTopCard } from "./api.js";
+import { createItem, deleteItem, getItems, filterItems, getPlayers, testUpdate, createTopCard, getTopCard } from "./api.js";
 
 
-function drawTable(players, items) {
+function drawTable(players, items, topCard) {
   const table = document.getElementById("main-table-body");
 
 
@@ -47,7 +47,10 @@ function drawTable(players, items) {
 
       row.insertCell().appendChild(button);
 
+
     }
+
+
 
     // just fix return value :)
     // const promise1 = getCards(player._id)
@@ -88,6 +91,9 @@ function drawTable(players, items) {
     //row.insertCell().appendChild(button);
   }
 
+  const row = table.insertRow();
+  row.insertCell().innerText = "Top Card : " + topCard.number;
+
 }
 
 export async function fetchAndDrawTable() {
@@ -95,11 +101,12 @@ export async function fetchAndDrawTable() {
   // const items = await getCards();
   const players = await getPlayers();
   const items = await getItems();
+  const topCard = await getTopCard();
 
   // await console.log(players)
 
   // drawTable(players, items);
-  drawTable(players, items)
+  drawTable(players, items, topCard)
 }
 
 export async function handleDeleteItem(id) {
