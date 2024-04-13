@@ -33,6 +33,31 @@ export async function deleteItem(id) {
   });
 }
 
+//
+
+
+// add createTopCard here
+// export async function createTopCard(id) {
+
+//   await fetch(`${BACKEND_URL}/tables`, {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify(id),
+//   });
+// }
+
+export async function createTopCard(id) {
+  //console.log(id)
+  await fetch(`${BACKEND_URL}/tables/${id}`, {
+    method: "POST",
+  });
+}
+
+
+//
+
 export async function testUpdate(id, tmpcards) {
   await fetch(`${BACKEND_URL}/players/${id}/${tmpcards}`, {
     method: "PUT",

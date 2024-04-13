@@ -24,11 +24,11 @@ document.addEventListener("DOMContentLoaded", () => {
     handleCreatePlayer();
   });
 
-  const TestUpdateButton = document.getElementById("testupdate");
-  TestUpdateButton.addEventListener("click", () => {
-    alert("testupdate")
-    //handleTestUpdate("661a0283707255858bb965ba");
-  });
+  // const TestUpdateButton = document.getElementById("testupdate");
+  // TestUpdateButton.addEventListener("click", () => {
+  //   alert("testupdate")
+  //   //handleTestUpdate("661a0283707255858bb965ba");
+  // });
 
   // const addMemberButton = document.getElementById("add-member");
   // addMemberButton.addEventListener("click", () => {

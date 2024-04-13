@@ -1,4 +1,4 @@
-import { createItem, deleteItem, getItems, filterItems, getPlayers, testUpdate } from "./api.js";
+import { createItem, deleteItem, getItems, filterItems, getPlayers, testUpdate, createTopCard } from "./api.js";
 
 
 function drawTable(players, items) {
@@ -108,6 +108,9 @@ export async function handleDeleteItem(id) {
 
   alert(id)
 
+
+  // call createTopCard here 
+  await createTopCard(id);
   await deleteItem(id);
   await fetchAndDrawTable();
   // clearFilter();
@@ -147,6 +150,42 @@ export async function handleCreateItem() {
   //clearFilter();
 }
 
+// export async function handleCreateTopCard(card) {
+//   // const itemToAdd = document.getElementById("item-to-add");
+//   // const nameToAdd = document.getElementById("name-to-add");
+//   // const priceToAdd = document.getElementById("price-to-add");
+
+//   // console.log(1);
+
+//   // const playerNameToAdd = document.getElementById("playerName-to-add");
+//   // const cardTypeToAdd = document.getElementById("cardType-to-add");
+//   // const numberToAdd = document.getElementById("number-to-add");
+//   // const playeridToAdd = document.getElementById("playerid-to-add");
+
+
+
+
+
+//   const payload = {
+//     // item: itemToAdd.value,
+//     // name: nameToAdd.value,
+//     // price: priceToAdd.value,
+//     playername: playerNameToAdd.value,
+//     cardtype: cardTypeToAdd.value,
+//     number: numberToAdd.value,
+//     playerid: playeridToAdd.value,
+//   };
+
+//   await createItem(payload);
+//   await fetchAndDrawTable(); // don't know why it's not refresh here fix it later
+
+//   playerNameToAdd.value = "";
+//   cardTypeToAdd.value = "0";
+//   numberToAdd.value = "";
+//   playeridToAdd.value = "";
+//   //clearFilter();
+// }
+
 // export async function clearFilter() {
 //   document.getElementById("filter-name").value = "-- ทั้งหมด --";
 //   document.getElementById("lower-price").value = "";
@@ -173,5 +212,9 @@ export async function handleCreateItem() {
 export async function handleTestUpdate(id) {
 
   //console.log("ming")
-  await testUpdate(id);
+  // call this in button
+
+  alert("Coming soon")
+
+  //await testUpdate(id);
 }
