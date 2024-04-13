@@ -52,7 +52,7 @@ export const deleteCard = async (req, res) => {
 export const testupdate = async (req, res) => {
     console.log(req.params)
 
-    const filter = { _id: "661a05336bd575eae059e842" }
+    const filter = { _id: req.params.id }
     const update = { cards: JSON.parse(req.params.tmpcards) }
 
     console.log(update.cards)
@@ -60,6 +60,11 @@ export const testupdate = async (req, res) => {
     const doc = await Player.findOneAndUpdate(filter, { cards: update.cards }, {
         new: true
     });
+
+    // Do not fix now it's work
+
+
+
 
     // console.log(doc);
 
