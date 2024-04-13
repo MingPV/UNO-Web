@@ -20,7 +20,7 @@ function drawTable(players, items) {
       }
     }
 
-    testUpdate(player._id, "tmpcards")
+    testUpdate(player._id, JSON.stringify(tmpcards))
 
   }
 

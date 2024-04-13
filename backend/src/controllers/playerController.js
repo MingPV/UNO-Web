@@ -52,14 +52,16 @@ export const deleteCard = async (req, res) => {
 export const testupdate = async (req, res) => {
     console.log(req.params)
 
-    const filter = { _id: "661a055c6bd575eae059e845" }
-    const update = { name: "NameChanged" }
+    const filter = { _id: "661a05336bd575eae059e842" }
+    const update = { cards: JSON.parse(req.params.tmpcards) }
 
-    const doc = await Player.findOneAndUpdate(filter, update, {
+    console.log(update.cards)
+
+    const doc = await Player.findOneAndUpdate(filter, { cards: update.cards }, {
         new: true
     });
 
-    console.log(doc.name);
+    // console.log(doc);
 
 
     //const player = await Player.cards.findOne({ _id: req.params.id });
