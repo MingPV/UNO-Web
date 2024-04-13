@@ -1,5 +1,4 @@
 import { createMember, deleteMember, getMembers } from "./api.js";
-import { MEMBERS } from "./config.js";
 import { fetchAndDrawTable } from "./table.js";
 
 export async function populateMembers() {

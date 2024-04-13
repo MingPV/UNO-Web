@@ -2,16 +2,11 @@ import Item from "../models/itemModel.js"
 import Table from "../models/tableModel.js";
 
 export const createCardAtTopOfTable = async (req, res) => {
-    //console.log(req.body.playername)
+    console.log(req.body.playername)
     try {
 
-        // const tmp = Item.findOne({ _id: req.params.id });
-
-
-        await Table.deleteMany();
-
-
         // just clear prev card
+        await Table.deleteMany();
 
         Item.findOne({ _id: req.params.id })
             .then(async (docs) => {
@@ -22,14 +17,6 @@ export const createCardAtTopOfTable = async (req, res) => {
             .catch((err) => {
                 console.log(err);
             });
-
-
-
-        //const newTopCard = new Table(req.body);
-        // console.log("ming")
-        // console.log(req.params.id)
-        // console.log(tmp)
-
 
         res.status(200).json({ message: "OK" });
     } catch (err) {
@@ -42,17 +29,10 @@ export const createCardAtTopOfTable = async (req, res) => {
 };
 
 export const getTables = async (req, res) => {
-    // const items = await Item.find();
-    // res.status(200).json(items);
-
     res.status(200).send(await Table.find());
 };
 
 export const deleteCardInTable = async (req, res) => {
-    // TODO2: implement this function
-    // HINT: you can serve the internet and find what method to use for deleting item.
-
-
 
     try {
         // console.log(req.params.id)
@@ -63,17 +43,3 @@ export const deleteCardInTable = async (req, res) => {
     }
 
 };
-
-// export const filterItems = async (req, res) => {
-
-//   try {
-//     const { filterName, lowerPrice, upperPrice } = req.body
-//     const filter = { price: { $gte: lowerPrice, $lte: upperPrice } }
-//     if (filterName) filter['name'] = filterName
-//     const items = await Item.find(filter)
-//     res.status(200).send(items);
-//   } catch (err) {
-//     res.status(400).json({ error: "Can not filter" })
-//   }
-
-// };

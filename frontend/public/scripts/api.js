@@ -8,21 +8,12 @@ export async function getItems() {
 }
 
 export async function getTopCard() {
-  //console.log("Ming")
   const tables = await fetch(`${BACKEND_URL}/tables`).then((r) => r.json());
 
   const topCard = tables[0]
 
   return topCard;
 }
-
-//add new
-// export async function getCards(playerid) {
-//   const cards = await fetch(`${BACKEND_URL}/players/${playerid}`).then((r) => r.json());
-
-//   return cards;
-// }
-
 
 export async function createItem(item) {
 
@@ -35,56 +26,25 @@ export async function createItem(item) {
   });
 }
 
+// delete when press PlayButton
 export async function deleteItem(id) {
-  //console.log(id)
   await fetch(`${BACKEND_URL}/items/${id}`, {
     method: "DELETE",
   });
 }
 
-//
-
-
-// add createTopCard here
-// export async function createTopCard(id) {
-
-//   await fetch(`${BACKEND_URL}/tables`, {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify(id),
-//   });
-// }
 
 export async function createTopCard(id) {
-  //console.log(id)
   await fetch(`${BACKEND_URL}/tables/${id}`, {
     method: "POST",
   });
 }
 
-
-//
-
-export async function testUpdate(id, tmpcards) {
+// Update Cards in Player hand
+export async function inHandCardUpdate(id, tmpcards) {
   await fetch(`${BACKEND_URL}/players/${id}/${tmpcards}`, {
     method: "PUT",
   });
-}
-
-
-
-export async function filterItems(filterName, lowerPrice, upperPrice) {
-  // TODO3: implement this function
-  // You may need to understand handleFilterItem() function in ./table.js before implementing this function.
-  return await fetch(`${BACKEND_URL}/items/filter`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ filterName, lowerPrice, upperPrice }),
-  }).then(res => res.json());
 }
 
 export async function getMembers() {

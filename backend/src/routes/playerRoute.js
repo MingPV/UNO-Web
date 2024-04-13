@@ -10,6 +10,6 @@ router.post("/", playerController.createPlayer);
 // router.get("/:id", playerController.getCards);
 //router.delete("/:id", playerController.deleteCard);
 // router.put("/:id", playerController.testupdate);
-router.put("/:id/:tmpcards", playerController.testupdate);
+router.put("/:id/:tmpcards", playerController.inHandCardUpdate);
 
 export default router;

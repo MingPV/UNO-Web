@@ -1,5 +1,4 @@
 import { createPlayer, deleteMember, getMembers } from "./api.js";
-import { MEMBERS } from "./config.js";
 import { fetchAndDrawTable } from "./table.js";
 
 export async function populateMembers() {
@@ -11,7 +10,6 @@ export async function populateMembers() {
     nameSelect.innerHTML = '<option value="0">-- เลือกผู้ฝากซื้อ --</option>';
     filterSelect.innerHTML = '<option value="ทั้งหมด">-- ทั้งหมด --</option>';
 
-    // TODO4: you may have to change from MEMBERS to something while doing the outstanding part.
     const members = await getMembers();
 
     members.forEach((member) => {
@@ -48,7 +46,6 @@ export async function handleCreatePlayer() {
 
     await createPlayer({ name: nameToAdd.value, cards: cardsToAdd });
     await fetchAndDrawTable();
-    //await populateMembers();
 
     nameToAdd.value = "";
 }
