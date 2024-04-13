@@ -38,7 +38,7 @@ export async function populateMembers() {
 
 export async function handleCreatePlayer() {
     const nameToAdd = document.getElementById("player-name-to-add");
-    const card1 = { playername: "PlayerTest", cardtype: "NumberCard2", number: 7, playerid: "012345" }
+    const card1 = { playername: "PlayerTest", playerid: "123456", value: "7", color: "blue" }
     const cardsToAdd = [card1, card1, card1];
 
     // random card here and don't forget to add card to items(database)

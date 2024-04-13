@@ -1,10 +1,10 @@
 import { BACKEND_URL } from "./config.js";
 
-export async function getItems() {
+export async function getCards() {
   //console.log("Ming")
-  const items = await fetch(`${BACKEND_URL}/items`).then((r) => r.json());
+  const cards = await fetch(`${BACKEND_URL}/cards`).then((r) => r.json());
 
-  return items;
+  return cards;
 }
 
 export async function getTopCard() {
@@ -15,20 +15,20 @@ export async function getTopCard() {
   return topCard;
 }
 
-export async function createItem(item) {
+export async function createCard(card) {
 
-  await fetch(`${BACKEND_URL}/items`, {
+  await fetch(`${BACKEND_URL}/cards`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(item),
+    body: JSON.stringify(card),
   });
 }
 
 // delete when press PlayButton
-export async function deleteItem(id) {
-  await fetch(`${BACKEND_URL}/items/${id}`, {
+export async function deleteCard(id) {
+  await fetch(`${BACKEND_URL}/cards/${id}`, {
     method: "DELETE",
   });
 }

@@ -1,10 +1,10 @@
-import Item from "../models/itemModel.js";
+import Card from "../models/cardModel.js";
 
-export const createItem = async (req, res) => {
+export const createCard= async (req, res) => {
   try {
-    const newItem = new Item(req.body);
+    const newCard = new Card(req.body);
     console.log(req.body)
-    await newItem.save();
+    await newCard.save();
 
     res.status(200).json({ message: "OK" });
   } catch (err) {
@@ -16,15 +16,15 @@ export const createItem = async (req, res) => {
   }
 };
 
-export const getItems = async (req, res) => {
-  res.status(200).send(await Item.find());
+export const getCards = async (req, res) => {
+  res.status(200).send(await Card.find());
 };
 
-export const deleteItem = async (req, res) => {
+export const deleteCard = async (req, res) => {
 
   try {
     // console.log(req.params.id)
-    await Item.deleteOne({ _id: req.params.id })
+    await Card.deleteOne({ _id: req.params.id })
     res.status(200).send(req.params.id);
   } catch (err) {
     res.status(400).json({ error: "Can not delete" })

@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 
-import ItemRoute from "./routes/itemRoute.js";
+import CardRoute from "./routes/cardRoute.js";
 import PlayerRoute from "./routes/playerRoute.js";
 import TableRoute from "./routes/tableRoute.js";
 
@@ -15,7 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 // use routes
-app.use("/items", ItemRoute);
+app.use("/cards", CardRoute);
 app.use("/players", PlayerRoute);
 app.use("/tables", TableRoute)
 

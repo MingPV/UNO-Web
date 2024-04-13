@@ -1,4 +1,4 @@
-import Item from "../models/itemModel.js"
+import Card from "../models/cardModel.js"
 import Table from "../models/tableModel.js";
 
 export const createCardAtTopOfTable = async (req, res) => {
@@ -8,10 +8,10 @@ export const createCardAtTopOfTable = async (req, res) => {
         // just clear prev card
         await Table.deleteMany();
 
-        Item.findOne({ _id: req.params.id })
+        Card.findOne({ _id: req.params.id })
             .then(async (docs) => {
                 console.log("Result :", docs);
-                const newTopCard = new Table({ playername: docs.playername, cardtype: docs.cardtype, number: docs.number, playerid: docs.playerid });
+                const newTopCard = new Table({ playername: docs.playername, playerid: docs.playerid, value: docs.value, color: docs.color });
                 await newTopCard.save();
             })
             .catch((err) => {

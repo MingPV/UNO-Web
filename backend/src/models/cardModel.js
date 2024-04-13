@@ -1,26 +1,25 @@
 import mongoose from "mongoose";
 
-const itemSchema = new mongoose.Schema({
+const cardSchema = new mongoose.Schema({
   playername: {
     type: String,
     required: true,
   },
-  cardtype: {
-    type: String,
-    required: true,
-  },
-
-  number: {
-    type: Number,
-    required: true,
-  },
   playerid: {
     type: String,
-    required: true
-  }
+    required: true,
+  },
+  value: {
+    type: String,
+    required: true,
+  },
+  color: {
+    type: String,
+    require: true,
+  },
 });
 
-const Item = mongoose.model("Item", itemSchema);
+const Card = mongoose.model("Card", cardSchema);
 
-export default Item;
+export default Card;
 // export default itemSchema;

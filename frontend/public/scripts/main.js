@@ -1,14 +1,14 @@
-import { fetchAndDrawTable, handleCreateItem } from "./table.js";
+import { fetchAndDrawTable, handleCreateCard } from "./table.js";
 import { handleCreatePlayer } from "./player.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   fetchAndDrawTable();
 
   // AddCard Part
-  const addItemButton = document.getElementById("add-newrow");
-  addItemButton.addEventListener("click", () => {
+  const addCardButton = document.getElementById("add-newrow");
+  addCardButton.addEventListener("click", () => {
 
-    handleCreateItem();
+    handleCreateCard();
   });
 
 
