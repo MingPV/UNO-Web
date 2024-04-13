@@ -1,6 +1,7 @@
 import { BACKEND_URL } from "./config.js";
 
 export async function getItems() {
+  console.log("Ming")
   const items = await fetch(`${BACKEND_URL}/items`).then((r) => r.json());
 
   return items;
@@ -31,8 +32,8 @@ export async function deleteItem(id, item) {
   });
 }
 
-export async function testUpdate(id) {
-  await fetch(`${BACKEND_URL}/players/${id}`, {
+export async function testUpdate(id, tmpcards) {
+  await fetch(`${BACKEND_URL}/players/${id}/${tmpcards}`, {
     method: "PUT",
   });
 }

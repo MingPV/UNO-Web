@@ -1,18 +1,38 @@
 import { createItem, deleteItem, getItems, filterItems, getPlayers, testUpdate } from "./api.js";
 
 
-function drawTable(players) {
+function drawTable(players, items) {
   const table = document.getElementById("main-table-body");
+
 
   table.innerHTML = "";
 
   // create array that contain member card
+  // and update array of card (cards) by playerid
+  // this function is so slow but optimize later ! (we have just <1000 cards per game)
 
+
+  for (const player of players) {
+    const tmpcards = []
+    for (const card of items) {
+      if (card.playerid == player._id) {
+        tmpcards.push(card)
+      }
+    }
+
+    testUpdate(player._id, "tmpcards")
+
+  }
+
+  // for (const item of items) {
+  //   const row = table.insertRow();
+  //   row.insertCell.innerText = item.cardtype;
+  // }
 
 
   for (const player of players) {
     const row = table.insertRow();
-    row.insertCell().innerText = player.name;
+    row.insertCell().innerText = player.name; // prev is player.name
 
     // just fix return value :)
     // const promise1 = getCards(player._id)
@@ -59,8 +79,12 @@ export async function fetchAndDrawTable() {
   // const items = await getItems();
   // const items = await getCards();
   const players = await getPlayers();
+  const items = await getItems();
 
-  drawTable(players);
+  // await console.log(players)
+
+  // drawTable(players, items);
+  drawTable(players, items)
 }
 
 export async function handleDeleteItem(id) {

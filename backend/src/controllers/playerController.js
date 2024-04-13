@@ -50,7 +50,7 @@ export const deleteCard = async (req, res) => {
 };
 
 export const testupdate = async (req, res) => {
-    console.log(req.params.id)
+    console.log(req.params)
 
     const filter = { _id: "661a055c6bd575eae059e845" }
     const update = { name: "NameChanged" }

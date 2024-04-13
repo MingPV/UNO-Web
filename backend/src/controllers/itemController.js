@@ -18,8 +18,10 @@ export const createItem = async (req, res) => {
 };
 
 export const getItems = async (req, res) => {
-  const items = await Item.find();
-  res.status(200).json(items);
+  // const items = await Item.find();
+  // res.status(200).json(items);
+
+  res.status(200).send(await Item.find());
 };
 
 export const deleteItem = async (req, res) => {
