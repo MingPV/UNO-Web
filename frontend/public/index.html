@@ -5,9 +5,22 @@
   <meta charset="UTF-8" />
   <title>UNO Game</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    .init-label {
+      font-size: 20px;
+      color: red;
+    }
+  </style>
 </head>
 
 <body>
+
+
+  <label class="init-label">INIT FIRST BEFORE DO ANYTHING</label>
+  <button id="init-game">Init Game</button>
+  <br />
+  <br />
+
   <input id="player-name-to-add" />
   <Button id="add-player">add player</Button>
 
@@ -33,7 +46,7 @@
   <label>(must have this player in database. if not it will crash !!.)</label>
   <br />
   <br />
-  <button id="add-newrow">Add Card</button>
+  <button id="add-newrow">Draw Card</button>
   <br />
 
   <br />
@@ -52,8 +65,11 @@
       <tfoot id="main-table-foot"></tfoot>
     </table>
   </div>
+  <div id="deck-count">Number of cards in the deck: 0</div>
+  <label class="card-deck">card deck</label>
+  <table>
 
-
+    <tbody id="deck-table"></tbody>
 
   <script type="module" src="scripts/main.js"></script>
 </body>

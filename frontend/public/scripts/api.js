@@ -67,3 +67,17 @@ export async function deletePlayer(id) {
     method: "DELETE",
   });
 }
+
+export async function initGame() {
+  await fetch(`${BACKEND_URL}/games`);
+}
+
+export async function getGame() {
+  const games = await fetch(`${BACKEND_URL}/games`).then((r) => r.json());
+  return games;
+}
+
+export async function getRandomCardFromDeck() {
+  const card = await fetch(`${BACKEND_URL}/games`).then((r) => r.json());
+  return card;
+}

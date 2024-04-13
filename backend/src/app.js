@@ -4,6 +4,7 @@ import cors from "cors";
 import CardRoute from "./routes/cardRoute.js";
 import PlayerRoute from "./routes/playerRoute.js";
 import TableRoute from "./routes/tableRoute.js";
+import GameRoute from "./routes/gameRoute.js";
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use(cors());
 // use routes
 app.use("/cards", CardRoute);
 app.use("/players", PlayerRoute);
-app.use("/tables", TableRoute)
+app.use("/tables", TableRoute);
+app.use("/games", GameRoute);
 
 export default app;

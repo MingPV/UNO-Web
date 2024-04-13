@@ -7,7 +7,9 @@ import {
   inHandCardUpdate,
   createTopCard,
   getTopCard,
+  getRandomCardFromDeck,
 } from "./api.js";
+import { drawDeckTable } from "./game.js";
 
 async function drawTable(players, cards, topCard) {
   const table = document.getElementById("main-table-body");
