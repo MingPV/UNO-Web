@@ -1,9 +1,9 @@
 import { createItem, deleteItem, getItems, filterItems, getPlayers, testUpdate, createTopCard, getTopCard } from "./api.js";
 
 
-function drawTable(players, items, topCard) {
-  const table = document.getElementById("main-table-body");
+async function drawTable(players, items, topCard) {
 
+  const table = document.getElementById("main-table-body");
 
   table.innerHTML = "";
 
@@ -11,18 +11,21 @@ function drawTable(players, items, topCard) {
   // and update array of card (cards) by playerid
   // this function is so slow but optimize later ! (we have just <1000 cards per game)
 
+  // for (const player of players) {
+  //   const tmpcards = []
+  //   for (const card of items) {
+  //     if (card.playerid == player._id) {
+  //       tmpcards.push(card)
+  //     }
+  //   }
 
-  for (const player of players) {
-    const tmpcards = []
-    for (const card of items) {
-      if (card.playerid == player._id) {
-        tmpcards.push(card)
-      }
-    }
+  //   await testUpdate(player._id, JSON.stringify(tmpcards))
 
-    testUpdate(player._id, JSON.stringify(tmpcards))
+  // }
 
-  }
+  await updateArrayCard(players, items);
+
+  const playersAfterUpdate = await getPlayers();
 
   // for (const item of items) {
   //   const row = table.insertRow();
@@ -30,7 +33,7 @@ function drawTable(players, items, topCard) {
   // }
 
 
-  for (const player of players) {
+  for (const player of playersAfterUpdate) {
     const row = table.insertRow();
     row.insertCell().innerText = player.name; // prev is player.name
 
@@ -106,19 +109,32 @@ export async function fetchAndDrawTable() {
   // await console.log(players)
 
   // drawTable(players, items);
-  drawTable(players, items, topCard)
+  await drawTable(players, items, topCard)
+}
+
+async function updateArrayCard(players, items) {
+  for (const player of players) {
+    const tmpcards = []
+    for (const card of items) {
+      if (card.playerid == player._id) {
+        tmpcards.push(card)
+      }
+    }
+
+    await testUpdate(player._id, JSON.stringify(tmpcards))
+
+  }
+
 }
 
 export async function handleDeleteItem(id) {
 
   // just delete in items and in player's hand we update every times when we fetchanddraw()
 
-  alert(id)
-
-
   // call createTopCard here 
   await createTopCard(id);
   await deleteItem(id);
+
   await fetchAndDrawTable();
   // clearFilter();
 }
@@ -148,13 +164,15 @@ export async function handleCreateItem() {
   };
 
   await createItem(payload);
-  await fetchAndDrawTable(); // don't know why it's not refresh here fix it later
+
 
   playerNameToAdd.value = "";
   cardTypeToAdd.value = "0";
   numberToAdd.value = "";
   playeridToAdd.value = "";
   //clearFilter();
+
+  await fetchAndDrawTable(); // don't know why it's not refresh here fix it later
 }
 
 // export async function handleCreateTopCard(card) {

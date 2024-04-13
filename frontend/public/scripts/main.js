@@ -20,7 +20,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const addPlayerButton = document.getElementById("add-player");
   addPlayerButton.addEventListener("click", () => {
-    alert("test")
     handleCreatePlayer();
   });
 

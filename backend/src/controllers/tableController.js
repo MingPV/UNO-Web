@@ -7,7 +7,10 @@ export const createCardAtTopOfTable = async (req, res) => {
 
         // const tmp = Item.findOne({ _id: req.params.id });
 
+
         await Table.deleteMany();
+
+
         // just clear prev card
 
         Item.findOne({ _id: req.params.id })
