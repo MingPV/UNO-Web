@@ -7,7 +7,7 @@ const router = express.Router();
 router.get("/", itemController.getItems);
 router.post("/", itemController.createItem);
 //router.post("/filter", itemController.filterItems);
-//router.delete("/:id", itemController.deleteItem);
+router.delete("/:id", itemController.deleteItem);
 // TODO3: add a router for the filter function
 
 export default router;

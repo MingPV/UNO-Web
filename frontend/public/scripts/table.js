@@ -41,8 +41,10 @@ function drawTable(players, items) {
       // play button
       const button = document.createElement("button");
       // button.addEventListener("click", () => handleDeleteItem(value.cards, index));
-      button.addEventListener("click", () => alert("play"));
-      button.innerText = "play";
+      button.addEventListener("click", () => handleDeleteItem(button.value));
+      button.innerText = "play " + card.number;
+      button.value = card._id;
+
       row.insertCell().appendChild(button);
 
     }
@@ -102,9 +104,12 @@ export async function fetchAndDrawTable() {
 
 export async function handleDeleteItem(id) {
 
+  // just delete in items and in player's hand we update every times when we fetchanddraw()
+
   alert(id)
 
   await deleteItem(id);
+
   // await fetchAndDrawTable();
   // clearFilter();
 }
@@ -168,6 +173,6 @@ export async function handleCreateItem() {
 
 export async function handleTestUpdate(id) {
 
-  console.log("ming")
+  //console.log("ming")
   await testUpdate(id);
 }

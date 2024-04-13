@@ -27,7 +27,11 @@ export const getItems = async (req, res) => {
 export const deleteItem = async (req, res) => {
   // TODO2: implement this function
   // HINT: you can serve the internet and find what method to use for deleting item.
+
+
+
   try {
+    // console.log(req.params.id)
     await Item.deleteOne({ _id: req.params.id })
     res.status(200).send(req.params.id);
   } catch (err) {
