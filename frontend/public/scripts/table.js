@@ -34,6 +34,19 @@ function drawTable(players, items) {
     const row = table.insertRow();
     row.insertCell().innerText = player.name; // prev is player.name
 
+    const playercards = player.cards;
+
+    for (const card of playercards) {
+      row.insertCell().innerText = card.number;
+      // play button
+      const button = document.createElement("button");
+      // button.addEventListener("click", () => handleDeleteItem(value.cards, index));
+      button.addEventListener("click", () => alert("play"));
+      button.innerText = "play";
+      row.insertCell().appendChild(button);
+
+    }
+
     // just fix return value :)
     // const promise1 = getCards(player._id)
     // console.log(promise1)
@@ -121,7 +134,7 @@ export async function handleCreateItem() {
   };
 
   await createItem(payload);
-  await fetchAndDrawTable();
+  await fetchAndDrawTable(); // don't know why it's not refresh here fix it later
 
   playerNameToAdd.value = "";
   cardTypeToAdd.value = "0";

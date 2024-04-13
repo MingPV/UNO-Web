@@ -46,7 +46,7 @@ export async function handleCreatePlayer() {
     // const cardsToAdd = [card2, card2, card2];
 
     await createPlayer({ name: nameToAdd.value, cards: cardsToAdd });
-    //await fetchAndDrawTable();
+    await fetchAndDrawTable();
     //await populateMembers();
 
     nameToAdd.value = "";
