@@ -98,6 +98,12 @@ export async function handleCreateItem() {
   const numberToAdd = document.getElementById("number-to-add");
   const playeridToAdd = document.getElementById("playerid-to-add");
 
+  // Check First
+  if (playerNameToAdd.value == "" || cardTypeToAdd.value == "" || numberToAdd.value == "" || playeridToAdd.value == "") {
+    alert("Enter detail before add")
+    return;
+  }
+
 
 
   const payload = {

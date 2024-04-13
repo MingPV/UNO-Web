@@ -44,6 +44,12 @@ export async function handleCreatePlayer() {
     // random card here and don't forget to add card to items(database)
     // if not all cards will be deleted
 
+    // Check First
+    if (nameToAdd.value == "") {
+        alert("Enter player name")
+        return;
+    }
+
     await createPlayer({ name: nameToAdd.value, cards: cardsToAdd });
     await fetchAndDrawTable();
 

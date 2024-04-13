@@ -2,7 +2,6 @@ import express from "express";
 import cors from "cors";
 
 import ItemRoute from "./routes/itemRoute.js";
-import MemberRoute from "./routes/memberRoute.js";
 import PlayerRoute from "./routes/playerRoute.js";
 import TableRoute from "./routes/tableRoute.js";
 
@@ -17,7 +16,6 @@ app.use(cors());
 
 // use routes
 app.use("/items", ItemRoute);
-app.use("/members", MemberRoute);
 app.use("/players", PlayerRoute);
 app.use("/tables", TableRoute)
 

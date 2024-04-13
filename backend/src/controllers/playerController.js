@@ -1,4 +1,3 @@
-import Item from "../models/itemModel.js";
 import Player from "../models/playerModel.js"
 
 
