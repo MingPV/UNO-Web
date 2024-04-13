@@ -7,6 +7,10 @@ async function drawTable(players, items, topCard) {
 
   table.innerHTML = "";
 
+  const tablehead = document.getElementById("main-table-head");
+
+  tablehead.innerHTML = "";
+
   // create array that contain member card
   // and update array of card (cards) by playerid
   // this function is so slow but optimize later ! (we have just <1000 cards per game)
@@ -32,11 +36,16 @@ async function drawTable(players, items, topCard) {
   //   row.insertCell.innerText = item.cardtype;
   // }
 
+  for (const player of playersAfterUpdate) {
+    const rowInHead = tablehead.insertRow();
+    rowInHead.insertCell().innerText = player.name + "( " + player._id + " )  "; // prev is player.name
+  }
+
+
 
   for (const player of playersAfterUpdate) {
     const row = table.insertRow();
-    row.insertCell().innerText = player.name; // prev is player.name
-
+    row.insertCell().innerText = player.name;
     const playercards = player.cards;
 
     for (const card of playercards) {

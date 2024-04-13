@@ -12,8 +12,9 @@
   <Button id="add-player">add player</Button>
 
   <table>
-    <tbody id="main-table-body"></tbody>
-    <tfoot>
+    <thead id="main-table-head"></thead>
+    <!-- <tbody id="main-table-body"></tbody> -->
+    <!-- <tfoot>
       <tr id="newrow-form">
         <td>
           <p>name</p><input id="playerName-to-add" type="text" />
@@ -25,13 +26,45 @@
           <p>number</p><input id="number-to-add" type="number" />
         </td>
         <td>
-          <p>playerid (must have this player in database. if not it will crash !!. You can find _id in Mongoose)</p>
+          <p>playerid (must have this player in database. if not it will crash !!.)</p>
           <input id="playerid-to-add" type="string" />
         </td>
         <td><button id="add-newrow">เพิ่ม</button></td>
       </tr>
-    </tfoot>
+    </tfoot> -->
   </table>
+
+  <br />
+  <hr />
+  <br />
+
+  <label>PlayerName</label>
+  <input id="playerName-to-add" type="text" />
+  <br />
+  <label>CardType</label>
+  <input id="cardType-to-add"></input>
+  <br />
+  <label>Number</label>
+  <input id="number-to-add" type="number" />
+  <br />
+  <label>playerid</label>
+  <input id="playerid-to-add" type="string" />
+  <label>(must have this player in database. if not it will crash !!.)</label>
+  <br />
+  <br />
+  <button id="add-newrow">Add Card</button>
+  <br />
+
+  <br />
+  <hr />
+  <br />
+
+  <table>
+
+    <tbody id="main-table-body"></tbody>
+
+  </table>
+
 
   <script type="module" src="scripts/main.js"></script>
 </body>
