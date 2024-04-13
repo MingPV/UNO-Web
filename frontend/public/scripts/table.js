@@ -3,6 +3,7 @@ import {
   deleteCard,
   getCards,
   getPlayers,
+  deletePlayer,
   inHandCardUpdate,
   createTopCard,
   getTopCard,
@@ -28,7 +29,22 @@ async function drawTable(players, cards, topCard) {
 
   for (const player of playersAfterUpdate) {
     const rowInHead = tablehead.insertRow();
-    rowInHead.insertCell().innerText = player.name + "( " + player._id + " )  "; // prev is player.name
+    rowInHead.insertCell().innerText =
+      player.name +
+      "( " +
+      player._id +
+      " )  has " +
+      player.cards.length +
+      " cards left"; // prev is player.name
+    const button = document.createElement("button");
+
+    button.addEventListener("click", () => handleDeletePlayer(button.value));
+    button.innerText = " delete ";
+    button.value = player._id;
+
+    rowInHead.insertCell().appendChild(button);
+
+    //console.log("what ", player._id, button.value)
   }
 
   for (const player of playersAfterUpdate) {
@@ -55,7 +71,12 @@ async function drawTable(players, cards, topCard) {
   //console.log("Top Card:", topCard);
 
   const rowfoot = tablefoot.insertRow();
-  rowfoot.insertCell().innerText = topCard ? "Top Card : " + topCard.value + " " + topCard.color : "Top Card: ";
+  rowfoot.insertCell().innerText = topCard
+    ? "Top Card : " + topCard.value + " " + topCard.color
+    : "Top Card: ";
+
+  tablefoot.insertRow().insertCell().innerText =
+    "Number of Players: " + playersAfterUpdate.length;
 }
 
 export async function fetchAndDrawTable() {
@@ -85,6 +106,12 @@ export async function handleDeleteCard(id) {
   await createTopCard(id);
   await deleteCard(id);
 
+  await fetchAndDrawTable();
+}
+
+export async function handleDeletePlayer(id) {
+
+  await deletePlayer(id);
   await fetchAndDrawTable();
 }
 

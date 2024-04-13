@@ -32,3 +32,18 @@ export const inHandCardUpdate = async (req, res) => {
     res.status(200).send("OK");
 };
 
+export const deletePlayer = async (req, res) => {
+  try {
+      const playerId = req.params.id;
+      console.log(playerId, "what")
+      const deletedPlayer = await Player.deleteOne({_id: req.params.id});
+      if (!deletedPlayer) {
+          return res.status(404).send("Player not found");
+      }
+      res.status(200).send("Player deleted successfully");
+  } catch (error) {
+      console.error("Error deleting player:", error);
+      res.status(500).send("Internal Server Error");
+  }
+};
+

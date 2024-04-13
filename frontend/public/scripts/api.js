@@ -47,29 +47,6 @@ export async function inHandCardUpdate(id, tmpcards) {
   });
 }
 
-export async function getMembers() {
-  const members = await fetch(`${BACKEND_URL}/members`).then((r) => r.json());
-  return members;
-}
-
-export async function createMember(member) {
-  await fetch(`${BACKEND_URL}/members`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(member),
-  });
-}
-
-export async function deleteMember(id, item) {
-  await fetch(`${BACKEND_URL}/members/${id}`, {
-    method: "DELETE",
-  });
-}
-
-// add more
-
 export async function createPlayer(player) {
   await fetch(`${BACKEND_URL}/players`, {
     method: "POST",
@@ -83,4 +60,10 @@ export async function createPlayer(player) {
 export async function getPlayers() {
   const players = await fetch(`${BACKEND_URL}/players`).then((r) => r.json());
   return players;
+}
+
+export async function deletePlayer(id) {
+  await fetch(`${BACKEND_URL}/players/${id}`, {
+    method: "DELETE",
+  });
 }

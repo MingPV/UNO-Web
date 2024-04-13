@@ -1,6 +1,6 @@
 import Card from "../models/cardModel.js";
 
-export const createCard= async (req, res) => {
+export const createCard = async (req, res) => {
   try {
     const newCard = new Card(req.body);
     console.log(req.body)
