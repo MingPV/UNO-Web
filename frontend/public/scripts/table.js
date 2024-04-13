@@ -109,8 +109,7 @@ export async function handleDeleteItem(id) {
   alert(id)
 
   await deleteItem(id);
-
-  // await fetchAndDrawTable();
+  await fetchAndDrawTable();
   // clearFilter();
 }
 
