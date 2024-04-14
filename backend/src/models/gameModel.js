@@ -11,10 +11,13 @@ const gameSchema = new mongoose.Schema({
     type: Array
   },
   gameDirection: {
-    type: Boolean //0 left 1 right
+    type: Number //-1 counterclockwise 1 clockwise
   },
   playerTurn: {
     type: String
+  },
+  skipFlags: {
+    type: Array
   }
 });
 

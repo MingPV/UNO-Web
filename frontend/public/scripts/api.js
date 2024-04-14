@@ -69,15 +69,23 @@ export async function deletePlayer(id) {
 }
 
 export async function initGame() {
-  await fetch(`${BACKEND_URL}/games`);
+  await fetch(`${BACKEND_URL}/games`, {
+    method: "POST",
+  });
 }
 
 export async function getGame() {
-  const games = await fetch(`${BACKEND_URL}/games`).then((r) => r.json());
-  return games;
+  const game = await fetch(`${BACKEND_URL}/games/get`).then((r) => r.json());
+  return game;
+}
+
+export async function updateGame(game) {
+  await fetch(`${BACKEND_URL}/games/update/${game}`, {
+    method: "POST",
+  });
 }
 
 export async function getRandomCardFromDeck() {
-  const card = await fetch(`${BACKEND_URL}/games`).then((r) => r.json());
+  const card = await fetch(`${BACKEND_URL}/games/getRnd`).then((r) => r.json());
   return card;
 }

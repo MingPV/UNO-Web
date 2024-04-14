@@ -9,7 +9,7 @@ import {
   getTopCard,
   getRandomCardFromDeck,
 } from "./api.js";
-import { drawDeckTable } from "./game.js";
+import { drawDeckTable, handlePlayCard } from "./game.js";
 
 async function drawTable(players, cards, topCard) {
   const table = document.getElementById("main-table-body");
@@ -58,13 +58,29 @@ async function drawTable(players, cards, topCard) {
       row.insertCell().innerText = card.value + " " + card.color;
 
       // play button
-      const button = document.createElement("button");
 
-      button.addEventListener("click", () => handleDeleteCard(button.value));
-      button.innerText = "play " + card.value + " " + card.color;
-      button.value = card._id;
+      const colors = ["red", "blue", "green", "yellow"];
+      if (card.color == "wild") {
+        for (const color of colors) {
+          const button = document.createElement("button");
 
-      row.insertCell().appendChild(button);
+          button.addEventListener("click", () => handlePlayCard(color, card));
+          button.innerText = "play " + card.value + " " + color;
+          button.value = card._id;
+
+          row.insertCell().appendChild(button);
+        }
+      } else {
+        const button = document.createElement("button");
+
+        button.addEventListener("click", () =>
+          handlePlayCard(card.color, card)
+        );
+        button.innerText = "play " + card.value + " " + card.color;
+        button.value = card._id;
+
+        row.insertCell().appendChild(button);
+      }
       //console.log("wat the fuc\n");
       //console.log(card);
     }
@@ -73,6 +89,7 @@ async function drawTable(players, cards, topCard) {
   //console.log("Top Card:", topCard);
 
   const rowfoot = tablefoot.insertRow();
+  //console.log("top card", topCard);
   rowfoot.insertCell().innerText = topCard
     ? "Top Card : " + topCard.value + " " + topCard.color
     : "Top Card: ";
@@ -102,54 +119,53 @@ async function updateArrayCard(players, cards) {
   }
 }
 
-export async function handleDeleteCard(id) {
-  // just delete in items and in player's hand we update every times when we fetchanddraw()
+// export async function handleDeleteCard(id) {
+//   // just delete in items and in player's hand we update every times when we fetchanddraw()
 
-  await createTopCard(id);
-  await deleteCard(id);
+//   await createTopCard(id);
+//   await deleteCard(id);
 
-  await fetchAndDrawTable();
-}
+//   await fetchAndDrawTable();
+// }
 
 export async function handleDeletePlayer(id) {
-
   await deletePlayer(id);
   await fetchAndDrawTable();
 }
 
 export async function handleCreateCard() {
-  const playerNameToAdd = document.getElementById("playerName-to-add");
+  // const playerNameToAdd = document.getElementById("playerName-to-add");
   const playeridToAdd = document.getElementById("playerid-to-add");
-  const valueToAdd = document.getElementById("value-to-add");
-  const colorToAdd = document.getElementById("color-to-add");
+  // const valueToAdd = document.getElementById("value-to-add");
+  // const colorToAdd = document.getElementById("color-to-add");
 
   // Check First
   if (
-    playerNameToAdd.value == "" ||
-    playeridToAdd.value == "" ||
-    valueToAdd.value == "" ||
-    colorToAdd.value == ""
+    // playerNameToAdd.value == "" ||
+    // playeridToAdd.value == "" ||
+    // valueToAdd.value == "" ||
+    // colorToAdd.value == ""
+    playeridToAdd.value == ""
   ) {
     alert("Enter detail before add");
     return;
   }
 
-  const payload = {
-    playername: playerNameToAdd.value,
-    playerid: playeridToAdd.value,
-    value: valueToAdd.value,
-    color: colorToAdd.value,
-  };
+  const card = await getRandomCardFromDeck();
 
-  await createCard(payload);
+  card.playername = "a";
+  card.playerid = playeridToAdd.value;
+  //console.log(card);
+  await createCard(card);
 
-  playerNameToAdd.value = "";
+  // playerNameToAdd.value = "";
   playeridToAdd.value = "";
-  valueToAdd.value = "";
-  colorToAdd.value = "";
+  // valueToAdd.value = "";
+  // colorToAdd.value = "";
   //clearFilter();
 
   await fetchAndDrawTable(); // don't know why it's not refresh here fix it later
+  await drawDeckTable();
 }
 
 export async function handleTestUpdate(id) {

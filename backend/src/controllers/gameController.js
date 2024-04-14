@@ -3,7 +3,20 @@ import Player from "../models/playerModel.js";
 import Game from "../models/gameModel.js";
 
 // Card types
-const values = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "skip", "reverse", "draw2"];
+const values = [
+  "1",
+  "2",
+  "3",
+  "4",
+  "5",
+  "6",
+  "7",
+  "8",
+  "9",
+  "skip",
+  "reverse",
+  "draw2",
+];
 const colors = ["red", "blue", "green", "yellow"];
 
 function generateDeck() {
@@ -13,32 +26,40 @@ function generateDeck() {
     for (let color of colors) {
       for (let j = 0; j < 2; j++) {
         // two of each number card
-        deck.push(new Card({
-          value: value,
-          color: color
-        }));
+        deck.push(
+          new Card({
+            value: value,
+            color: color,
+          })
+        );
       }
     }
   }
 
   // Add 4 colors of 0
   for (let color of colors) {
-    deck.push(new Card({
-      value: '0',
-      color: color
-    }));
+    deck.push(
+      new Card({
+        value: "0",
+        color: color,
+      })
+    );
   }
 
   // Add wild and wild draw 4 cards
   for (let i = 0; i < 4; i++) {
-    deck.push(new Card({
-      value: "wild",
-      color: "wild"
-    }));
-    deck.push(new Card({
-      value: "wild4",
-      color: "wild"
-    }));
+    deck.push(
+      new Card({
+        value: "wild",
+        color: "wild",
+      })
+    );
+    deck.push(
+      new Card({
+        value: "wild4",
+        color: "wild",
+      })
+    );
   }
 
   return deck;
@@ -57,30 +78,31 @@ export const initGame = async (req, res) => {
   try {
     await Game.deleteMany();
     const game = Game({
-      gameState: 0,
+      gameState: 1,
       gameDeck: shuffleDeck(),
-      gameDirection: 0,
+      gameDirection: 1,
       usedDeck: [],
       playerTurn: 0,
+      skipFlags: [],
     });
-    console.log("what1 ", game.gameDeck.length)
+    console.log("what1 ", game.gameDeck.length);
     await game.save();
-    res.status(200).send(game);
+    res.status(200).json({ message: "OK" });
     //io.emit("gameInit", game);
   } catch (err) {
     console.error("Error initializing game:", err);
   }
-}
-
-export const getGame = async (req, res) => { // still not working
-  console.log("what the fuck getted");
-  res.status(200).send(await Game.find());
 };
 
-export const getRandomCardFromDeck = async (req, res) => { // still not working
-  console.log("what the fuck");
+export const getGame = async (req, res) => {
+  console.log("working getted");
+  res.status(200).send(await Game.findOne());
+};
+
+export const getRandomCardFromDeck = async (req, res) => {
+  console.log("working rnd");
   try {
-    const game = await Game.find();
+    const game = await Game.findOne();
 
     if (!game) {
       return res.status(404).json({ error: "Game not found." });
@@ -107,4 +129,21 @@ export const getRandomCardFromDeck = async (req, res) => { // still not working
     console.error("Error:", error);
     res.status(500).json({ error: "Internal server error." });
   }
+};
+
+export const updateGame = async (req, res) => {
+  try {
+    const game = new Game(req.body);
+
+    await game.save();
+
+    res.status(200).json({ message: "OK" });
+  } catch (err) {
+    if (err.name === "ValidationError") {
+      res.status(400).json({ error: "Bad Request na" });
+    } else {
+      res.status(500).json({ error: "Internal server error." });
+    }
+  }
+  //res.status(200).send(await Game.findOne());
 };

@@ -1,4 +1,18 @@
-import { initGame, getGame, getRandomCardFromDeck } from "./api.js";
+import {
+  createCard,
+  deleteCard,
+  getCards,
+  getPlayers,
+  deletePlayer,
+  inHandCardUpdate,
+  createTopCard,
+  getTopCard,
+  getRandomCardFromDeck,
+  getGame,
+  updateGame,
+} from "./api.js";
+
+import { fetchAndDrawTable } from "./table.js";
 
 export async function handleInitGame() {
   await initGame();
@@ -7,6 +21,8 @@ export async function handleInitGame() {
 
 export async function drawDeckTable() {
   const game = await getGame();
+
+  //console.log(game.gameDeck)
 
   const deckCountElement = document.getElementById("deck-count");
   const previousCount = parseInt(deckCountElement.dataset.count) || 0;
@@ -35,3 +51,79 @@ export async function drawDeckTable() {
     table.appendChild(cardElement);
   });
 }
+
+async function drawCard(playerid) {
+  const card = await getRandomCardFromDeck();
+  card.playername = "a";
+  card.playerid = playerid;
+  console.log(card);
+  await createCard(card);
+}
+
+export async function handlePlayCard(color, card) { // logic not fully implement
+  card.color = color;
+  const topCard = await getTopCard();
+  if (
+    topCard != null &&
+    card.color != topCard.color &&
+    card.color != "wild" &&
+    card.value != topCard.value
+  ) {
+    alert("invalid move");
+    return;
+  }
+
+  const game = await getGame();
+  const players = await getPlayers();
+  const cards = await getCards();
+
+  if (card.value == "draw2") {
+    const index = players.findIndex(player => player._id === card.playerid) + game.gameDirection;
+    if (index == players.length) {
+      index = 0;
+    } else if (index == -1) {
+      index = players.length - 1;
+    }
+    const id = players[index]._id;
+    for (i = 0; i < 2; ++i) {
+      drawCard(id);
+    }
+  } else if (card.value == "reverse") {
+    if (game.gameDirection == 1) {
+      game.gameDirection = -1;
+    } else {
+      game.gameDirection = 1;
+    }
+  } else if (card.value == "skip") {
+    game.playerTurn += gameDirection * 2;
+    if (game.playerTurn >= players.length) {
+      game.playerTurn -= players.length;
+    } else if (game.playerTurn < 0) {
+      game.playerTurn += players.length;
+    }
+  } else if (card.value == "wild4") {
+    const index = players.findIndex(card.playerid) + game.gameDirection;
+    if (index == players.length) {
+      index = 0;
+    } else if (index == -1) {
+      index = players.length - 1;
+    }
+    const id = players[id]._id;
+    for (i = 0; i < 4; ++i) {
+      drawCard(id);
+    }
+  }
+  await updateGame(game);
+
+  await createTopCard(card._id);
+  await deleteCard(card._id);
+  await fetchAndDrawTable();
+}
+
+// export async function handleDeleteCard(id) {
+//   // just delete in items and in player's hand we update every times when we fetchanddraw()
+
+//   await createTopCard(id);
+//   await deleteCard(id);
+//   await fetchAndDrawTable();
+// }
