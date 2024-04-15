@@ -8,8 +8,10 @@ import {
   createTopCard,
   getTopCard,
   getRandomCardFromDeck,
+  updateGame,
+  getGame
 } from "./api.js";
-import { drawDeckTable, handlePlayCard } from "./game.js";
+import { drawDeckTable, handlePlayCard, handleUno } from "./game.js";
 
 async function drawTable(players, cards, topCard) {
   const table = document.getElementById("main-table-body");
@@ -24,11 +26,12 @@ async function drawTable(players, cards, topCard) {
 
   tablefoot.innerHTML = "";
 
+  players = await getPlayers();
+  cards = await getCards();
   await updateArrayCard(players, cards);
-
   // getNewPlayers
   const playersAfterUpdate = await getPlayers();
-
+  
   for (const player of playersAfterUpdate) {
     const rowInHead = tablehead.insertRow();
     rowInHead.insertCell().innerText =
@@ -45,6 +48,17 @@ async function drawTable(players, cards, topCard) {
     button.value = player._id;
 
     rowInHead.insertCell().appendChild(button);
+
+    const button1 = document.createElement("button");
+
+    button1.addEventListener("click", () => {
+      handleUno(button1.value, new Date().getTime());
+      button1.style.display = "none"; // Hide button1 when clicked
+    });
+    button1.innerText = " Uno!!! ";
+    button1.value = player._id;
+
+    rowInHead.insertCell().appendChild(button1);
 
     //console.log("what ", player._id, button.value)
   }
@@ -135,31 +149,32 @@ export async function handleDeletePlayer(id) {
 
 export async function handleCreateCard() {
   // const playerNameToAdd = document.getElementById("playerName-to-add");
-  const playeridToAdd = document.getElementById("playerid-to-add");
+  //const playeridToAdd = document.getElementById("playerid-to-add");
   // const valueToAdd = document.getElementById("value-to-add");
   // const colorToAdd = document.getElementById("color-to-add");
-
+  const game = await getGame();
+  const players = await getPlayers();
   // Check First
-  if (
-    // playerNameToAdd.value == "" ||
-    // playeridToAdd.value == "" ||
-    // valueToAdd.value == "" ||
-    // colorToAdd.value == ""
-    playeridToAdd.value == ""
-  ) {
-    alert("Enter detail before add");
+  
+  if (game.isPlayed == true) {
+    alert("already played");
     return;
   }
-
+  if (game.isDraw == true) {
+    alert("already drew");
+    return;
+  }
   const card = await getRandomCardFromDeck();
 
-  card.playername = "a";
-  card.playerid = playeridToAdd.value;
+  card.playername = players[game.playerTurn].name;
+  card.playerid = players[game.playerTurn]._id;
+
+  game.isDraw = true;
   //console.log(card);
   await createCard(card);
-
+  await updateGame(game);
   // playerNameToAdd.value = "";
-  playeridToAdd.value = "";
+  //playeridToAdd.value = "";
   // valueToAdd.value = "";
   // colorToAdd.value = "";
   //clearFilter();

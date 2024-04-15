@@ -10,7 +10,7 @@ export const createCardAtTopOfTable = async (req, res) => {
 
         Card.findOne({ _id: req.params.id })
             .then(async (docs) => {
-                console.log("Result :", docs);
+                //console.log("Result :", docs);
                 const newTopCard = new Table({ playername: docs.playername, playerid: docs.playerid, value: docs.value, color: docs.color });
                 await newTopCard.save();
             })

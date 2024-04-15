@@ -10,6 +10,17 @@
       font-size: 20px;
       color: red;
     }
+    .table-container {
+      display: flex;
+    }
+
+    #deck-table {
+        flex: 1;
+    }
+
+    #used-table {
+        flex: 1;
+    }
   </style>
 </head>
 
@@ -35,8 +46,10 @@
   <!-- <label>PlayerName</label>
   <input id="playerName-to-add" type="text" />
   <br /> -->
-  <label>playerid</label>
-  <input id="playerid-to-add"></input>
+  <div id="game-res"><span style="color:red;">game result: </span></div>
+  <div id="player-turn">current player turn: </div>
+  <!-- <label>playerid</label>
+  <input id="playerid-to-add"></input> -->
   <br />
   <!-- <label>value</label>
   <input id="value-to-add" type="text" />
@@ -48,6 +61,10 @@
   <br />
   <button id="add-newrow">Draw Card</button>
   <br />
+  <br />
+  <button id="end-turn">End Turn</button>
+  <br />
+  <div id="game-direction">Game direction: </div>
 
   <br />
   <hr />
@@ -66,10 +83,38 @@
     </table>
   </div>
   <div id="deck-count">Number of cards in the deck: 0</div>
-  <label class="card-deck">card deck</label>
-  <table>
-
+  <div id="used-count">Number of cards used: 0</div>
+  <label class="card-deck">card deck, used deck</label>
+  <!-- <table>
     <tbody id="deck-table"></tbody>
+  </table>
+  
+  <table>
+    <tbody id="used-table"></tbody>
+  </table> -->
+  <div class="table-container">
+    <table id="deck-table">
+        <tbody>
+            <!-- Contents of the deck table -->
+        </tbody>
+    </table>
+    <label class="use-deck">used deck :</label>
+    <table id="used-table">
+        <tbody>
+            <!-- Contents of the used table -->
+        </tbody>
+    </table>
+  </div>
+
+  <!-- <table>
+    <tr>
+    <td><table><tr><td>Table 1</td></tr></table>
+    </td>
+    <td><table><tr><td>Table 2>/td></tr></table>
+    </td>
+    </tr>
+  </table> -->
+  </div>
 
   <script type="module" src="scripts/main.js"></script>
 </body>

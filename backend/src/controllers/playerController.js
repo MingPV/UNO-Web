@@ -16,12 +16,12 @@ export const deleteCard = async (req, res) => {
 };
 
 export const inHandCardUpdate = async (req, res) => {
-    console.log(req.params)
+    //console.log(req.params)
 
     const filter = { _id: req.params.id }
     const update = { cards: JSON.parse(req.params.tmpcards) }
 
-    console.log(update.cards)
+    //console.log(update.cards)
 
     const doc = await Player.findOneAndUpdate(filter, { cards: update.cards }, {
         new: true
@@ -35,7 +35,7 @@ export const inHandCardUpdate = async (req, res) => {
 export const deletePlayer = async (req, res) => {
   try {
       const playerId = req.params.id;
-      console.log(playerId, "what")
+      //console.log(playerId, "what")
       const deletedPlayer = await Player.deleteOne({_id: req.params.id});
       if (!deletedPlayer) {
           return res.status(404).send("Player not found");

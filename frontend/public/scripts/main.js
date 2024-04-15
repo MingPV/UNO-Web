@@ -1,9 +1,10 @@
 import { fetchAndDrawTable, handleCreateCard } from "./table.js";
 import { handleCreatePlayer } from "./player.js";
-import { handleInitGame } from "./game.js";
+import { handleInitGame, drawDeckTable, endTurn } from "./game.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   fetchAndDrawTable();
+  drawDeckTable();
 
   // AddCard Part
   const addCardButton = document.getElementById("add-newrow");
@@ -24,6 +25,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const initGameButton = document.getElementById("init-game");
   initGameButton.addEventListener("click", () => {
     handleInitGame();
+  });
+  
+  // end turn
+  const endturnButton = document.getElementById("end-turn");
+  endturnButton.addEventListener("click", () => {
+    endTurn();
   });
 
 

@@ -8,6 +8,6 @@ const router = express.Router();
 router.post("/", gameController.initGame);
 router.get("/get", gameController.getGame);
 router.get('/getRnd', gameController.getRandomCardFromDeck);
-router.post('/update/:game', gameController.updateGame);
+router.post('/update', gameController.updateGame);
 
 export default router;

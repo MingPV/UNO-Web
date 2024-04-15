@@ -14,10 +14,28 @@ const gameSchema = new mongoose.Schema({
     type: Number //-1 counterclockwise 1 clockwise
   },
   playerTurn: {
+    type: Number
+  },
+  skipFlags: { //kinda never use 
+    type: Array 
+  },
+  isPlayed: {
+    type: Boolean
+  },
+  isDraw: {
+    type: Boolean
+  }, 
+  drawId: {
     type: String
   },
-  skipFlags: {
+  pressedTime: {
     type: Array
+  },
+  isPress: {
+    type: Boolean
+  },
+  isSkip: {
+    type: Boolean
   }
 });
 

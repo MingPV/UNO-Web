@@ -1,6 +1,7 @@
 import Card from "../models/cardModel.js";
 import Player from "../models/playerModel.js";
 import Game from "../models/gameModel.js";
+import Table from "../models/tableModel.js";
 
 // Card types
 const values = [
@@ -77,13 +78,20 @@ function shuffleDeck() {
 export const initGame = async (req, res) => {
   try {
     await Game.deleteMany();
+    await Card.deleteMany();
+    await Table.deleteMany();
     const game = Game({
       gameState: 1,
       gameDeck: shuffleDeck(),
       gameDirection: 1,
       usedDeck: [],
       playerTurn: 0,
-      skipFlags: [],
+      isPlayed: 0,
+      isDraw: 0,
+      drawId: 0,
+      pressedTime: [],
+      isPress: false,
+      isSkip: false,
     });
     console.log("what1 ", game.gameDeck.length);
     await game.save();
@@ -132,15 +140,21 @@ export const getRandomCardFromDeck = async (req, res) => {
 };
 
 export const updateGame = async (req, res) => {
+  //console.log("updating", req.body);
   try {
-    const game = new Game(req.body);
+    const gameId = req.body._id; // Assuming the ID of the game is passed in the request parameters
+    const updatedGameData = req.body;
 
-    await game.save();
+    const game = await Game.findByIdAndUpdate(gameId, updatedGameData, { new: true });
+
+    if (!game) {
+      return res.status(404).json({ error: "Game not found." });
+    }
 
     res.status(200).json({ message: "OK" });
   } catch (err) {
     if (err.name === "ValidationError") {
-      res.status(400).json({ error: "Bad Request na" });
+      res.status(400).json({ error: "Bad Request" });
     } else {
       res.status(500).json({ error: "Internal server error." });
     }
