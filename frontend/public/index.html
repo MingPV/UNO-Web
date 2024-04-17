@@ -1,122 +1,70 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Uno Game</title>
+  </head>
+  <body>
+    <h1>Uno Game</h1>
+    <input type="text" id="playerNameInput" placeholder="Enter your name" />
+    <button id="joinGameBtn">Join Game</button>
 
-<head>
-  <meta charset="UTF-8" />
-  <title>UNO Game</title>
-  <link rel="stylesheet" href="style.css" />
-  <style>
-    .init-label {
-      font-size: 20px;
-      color: red;
-    }
-    .table-container {
-      display: flex;
-    }
+    <div id="playerIdDisplay" style="display: none"></div>
+    <div id="playerList"></div>
+    <!-- Add a div to display player ID -->
 
-    #deck-table {
-        flex: 1;
-    }
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      const socket = io();
+      let clientId = document
+        .getElementById("joinGameBtn")
+        .addEventListener("click", () => {
+          const playerName = document
+            .getElementById("playerNameInput")
+            .value.trim();
+          if (playerName) {
+            socket.emit("joinGame", playerName);
+          } else {
+            alert("Please enter your name");
+          }
+          const playerIdDisplay = document.getElementById("playerIdDisplay");
+          playerIdDisplay.style.display = "block";
+        });
 
-    #used-table {
-        flex: 1;
-    }
-  </style>
-</head>
+      socket.on("playerJoined", (playerName) => {
+        console.log(`${playerName} joined the game`);
+      });
 
-<body>
+      socket.on("yourId", (clientId) => {
+        // Display the client ID on the HTML page
 
+        document.getElementById("playerIdDisplay").innerText =
+          "Your assigned ID is: " + clientId;
 
-  <label class="init-label">INIT FIRST BEFORE DO ANYTHING</label>
-  <button id="init-game">Init Game</button>
-  <br />
-  <br />
+        socket.on("playersData", (players) => {
+          const playerList = document.getElementById("playerList");
+          playerList.innerHTML = "<p>All players:</p>";
+          console.log(players);
+          console.log("clientId : ", clientId);
+          players.forEach((player) => {
+            let numberList = "";
 
-  <input id="player-name-to-add" />
-  <Button id="add-player">add player</Button>
+            player.number.forEach((num) => {
+              numberList += `<li><p>${num}</p></li>`;
+            });
 
-  <table>
-    <thead id="main-table-head"></thead>
-  </table>
+            let playerInfo = `<p>Name: ${player.name}, id: ${
+              player.id === clientId ? player.id : "x"
+            }</p>`;
+            playerInfo += `<ul>${
+              player.id === clientId ? numberList : "<li><p>xxx</p></li>"
+            }</ul>`;
 
-  <br />
-  <hr />
-  <br />
-
-  <!-- <label>PlayerName</label>
-  <input id="playerName-to-add" type="text" />
-  <br /> -->
-  <div id="game-res"><span style="color:red;">game result: </span></div>
-  <div id="player-turn">current player turn: </div>
-  <!-- <label>playerid</label>
-  <input id="playerid-to-add"></input> -->
-  <br />
-  <!-- <label>value</label>
-  <input id="value-to-add" type="text" />
-  <br />
-  <label>color</label>
-  <input id="color-to-add" type="text" />
-  <label>(must have this player in database. if not it will crash !!.)</label>
-  <br /> -->
-  <br />
-  <button id="add-newrow">Draw Card</button>
-  <br />
-  <br />
-  <button id="end-turn">End Turn</button>
-  <br />
-  <div id="game-direction">Game direction: </div>
-
-  <br />
-  <hr />
-  <br />
-
-  <table>
-
-    <tbody id="main-table-body"></tbody>
-
-
-  </table>
-  <br />
-  <div style="color: red;">
-    <table>
-      <tfoot id="main-table-foot"></tfoot>
-    </table>
-  </div>
-  <div id="deck-count">Number of cards in the deck: 0</div>
-  <div id="used-count">Number of cards used: 0</div>
-  <label class="card-deck">card deck, used deck</label>
-  <!-- <table>
-    <tbody id="deck-table"></tbody>
-  </table>
-  
-  <table>
-    <tbody id="used-table"></tbody>
-  </table> -->
-  <div class="table-container">
-    <table id="deck-table">
-        <tbody>
-            <!-- Contents of the deck table -->
-        </tbody>
-    </table>
-    <label class="use-deck">used deck :</label>
-    <table id="used-table">
-        <tbody>
-            <!-- Contents of the used table -->
-        </tbody>
-    </table>
-  </div>
-
-  <!-- <table>
-    <tr>
-    <td><table><tr><td>Table 1</td></tr></table>
-    </td>
-    <td><table><tr><td>Table 2>/td></tr></table>
-    </td>
-    </tr>
-  </table> -->
-  </div>
-
-  <script type="module" src="scripts/main.js"></script>
-</body>
-
+            playerList.innerHTML += playerInfo;
+          });
+        });
+      });
+    </script>
+  </body>
 </html>
