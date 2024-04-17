@@ -16,7 +16,7 @@ import {
 
 import { fetchAndDrawTable } from "./table.js";
 
-export async function handleInitGame() {
+export async function handleInitGame(uniqid) {
   await initGame();
 
   const players = await getPlayers();
@@ -33,10 +33,10 @@ export async function drawDeckTable() {
   const game = await getGame();
   const players = await getPlayers();
 
-  //console.log(game.gameDeck)
+  //console.log('current',game)
 
   const turn = document.getElementById("player-turn");
-  turn.textContent = `current player turn: ${players[game.playerTurn].name}`;
+  turn.textContent = `current player turn: ${players[game.playerTurn].name} id : ${uniqid}`;
 
   const direct = document.getElementById("game-direction");
   if (game.gameDirection == 1) {
@@ -233,8 +233,14 @@ export async function endTurn() {
   const players = await getPlayers();
 
   console.log("ending turn",game);
+  //console.log(game.isPlayed === false, game.isDraw === false);
 
-  if (!(game.isPlayed == false || game.isDraw == false)) {
+  if (game.isPlayed === false && game.isDraw === false) {
+    alert("must play or draw first");
+    return;
+  }
+
+  if (!(game.isPlayed === false || game.isDraw === false)) {
     alert("must play or draw first");
     return;
   }
@@ -278,6 +284,7 @@ export async function endTurn() {
   game.isSkip = false;
   game.isPlayed = false;
   game.isPress = false;
+  game.isDraw = false;
   await updateGame(game);
   await drawDeckTable();
 }

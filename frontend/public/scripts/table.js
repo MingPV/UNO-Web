@@ -149,7 +149,7 @@ export async function handleDeletePlayer(id) {
 
 export async function handleCreateCard() {
   // const playerNameToAdd = document.getElementById("playerName-to-add");
-  //const playeridToAdd = document.getElementById("playerid-to-add");
+  // const playeridToAdd = document.getElementById("playerid-to-add");
   // const valueToAdd = document.getElementById("value-to-add");
   // const colorToAdd = document.getElementById("color-to-add");
   const game = await getGame();
