@@ -5,6 +5,7 @@ import Table from "../models/tableModel.js";
 
 // Card types
 const values = [
+  "0",
   "1",
   "2",
   "3",
@@ -145,7 +146,9 @@ export const updateGame = async (req, res) => {
     const gameId = req.body._id; // Assuming the ID of the game is passed in the request parameters
     const updatedGameData = req.body;
 
-    const game = await Game.findByIdAndUpdate(gameId, updatedGameData, { new: true });
+    const game = await Game.findByIdAndUpdate(gameId, updatedGameData, {
+      new: true,
+    });
 
     if (!game) {
       return res.status(404).json({ error: "Game not found." });

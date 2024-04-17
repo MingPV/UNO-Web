@@ -9,7 +9,7 @@ import {
   getTopCard,
   getRandomCardFromDeck,
   updateGame,
-  getGame
+  getGame,
 } from "./api.js";
 import { drawDeckTable, handlePlayCard, handleUno } from "./game.js";
 
@@ -31,7 +31,7 @@ async function drawTable(players, cards, topCard) {
   await updateArrayCard(players, cards);
   // getNewPlayers
   const playersAfterUpdate = await getPlayers();
-  
+
   for (const player of playersAfterUpdate) {
     const rowInHead = tablehead.insertRow();
     rowInHead.insertCell().innerText =
@@ -69,7 +69,7 @@ async function drawTable(players, cards, topCard) {
     const playercards = player.cards;
 
     for (const card of playercards) {
-      row.insertCell().innerText = card.value + " " + card.color;
+      //row.insertCell().innerText = card.value + " " + card.color;
 
       // play button
 
@@ -79,8 +79,13 @@ async function drawTable(players, cards, topCard) {
           const button = document.createElement("button");
 
           button.addEventListener("click", () => handlePlayCard(color, card));
-          button.innerText = "play " + card.value + " " + color;
-          button.value = card._id;
+          //button.innerText = "play " + card.value + " " + color;
+          button.style.backgroundImage = "url('../scripts/assets/wild.png')";
+          button.style.height = "6rem";
+          button.style.width = "4rem";
+          button.style.backgroundSize = "cover";
+          button.style.backgroundColor = "transparent";
+          button.style.border = "none";
 
           row.insertCell().appendChild(button);
         }
@@ -90,7 +95,19 @@ async function drawTable(players, cards, topCard) {
         button.addEventListener("click", () =>
           handlePlayCard(card.color, card)
         );
-        button.innerText = "play " + card.value + " " + card.color;
+        //button.innerText = "play " + card.value + " " + card.color;
+        button.style.backgroundImage = `url("../scripts/assets/${card.value}_${card.color}.png")`;
+
+        button.style.height = "6rem";
+        button.style.width = "4rem";
+        button.style.backgroundSize = "cover";
+        button.style.backgroundColor = "transparent";
+        button.style.border = "none";
+
+        row.insertCell().appendChild(button);
+
+        button.value = card._id;
+
         button.value = card._id;
 
         row.insertCell().appendChild(button);
@@ -155,7 +172,7 @@ export async function handleCreateCard() {
   const game = await getGame();
   const players = await getPlayers();
   // Check First
-  
+
   if (game.isPlayed == true) {
     alert("already played");
     return;
