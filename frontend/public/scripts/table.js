@@ -79,13 +79,13 @@ async function drawTable(players, cards, topCard) {
           const button = document.createElement("button");
 
           button.addEventListener("click", () => handlePlayCard(color, card));
-          //button.innerText = "play " + card.value + " " + color;
-          button.style.backgroundImage = "url('../scripts/assets/wild.png')";
-          button.style.height = "6rem";
-          button.style.width = "4rem";
-          button.style.backgroundSize = "cover";
-          button.style.backgroundColor = "transparent";
-          button.style.border = "none";
+          button.innerText = "play " + card.value + " " + color;
+          // button.style.backgroundImage = "url('../scripts/assets/wild.png')";
+          // button.style.height = "6rem";
+          // button.style.width = "4rem";
+          // button.style.backgroundSize = "cover";
+          // button.style.backgroundColor = "transparent";
+          // button.style.border = "none";
 
           row.insertCell().appendChild(button);
         }
@@ -95,14 +95,14 @@ async function drawTable(players, cards, topCard) {
         button.addEventListener("click", () =>
           handlePlayCard(card.color, card)
         );
-        //button.innerText = "play " + card.value + " " + card.color;
-        button.style.backgroundImage = `url("../scripts/assets/${card.value}_${card.color}.png")`;
+        button.innerText = "play " + card.value + " " + card.color;
+        //button.style.backgroundImage = `url("../scripts/assets/${card.value}_${card.color}.png")`;
 
-        button.style.height = "6rem";
-        button.style.width = "4rem";
-        button.style.backgroundSize = "cover";
-        button.style.backgroundColor = "transparent";
-        button.style.border = "none";
+        // button.style.height = "6rem";
+        // button.style.width = "4rem";
+        // button.style.backgroundSize = "cover";
+        // button.style.backgroundColor = "transparent";
+        // button.style.border = "none";
 
         row.insertCell().appendChild(button);
 

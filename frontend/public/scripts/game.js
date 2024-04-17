@@ -36,7 +36,7 @@ export async function drawDeckTable() {
   //console.log('current',game)
 
   const turn = document.getElementById("player-turn");
-  turn.textContent = `current player turn: ${players[game.playerTurn].name} id : ${uniqid}`;
+  turn.textContent = `current player turn: ${players[game.playerTurn].name}`;
 
   const direct = document.getElementById("game-direction");
   if (game.gameDirection == 1) {
