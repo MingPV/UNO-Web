@@ -1,27 +1,61 @@
 import { fetchAndDrawTable, handleCreateCard } from "./table.js";
 import { handleCreatePlayer } from "./player.js";
 import { handleInitGame, drawDeckTable, endTurn } from "./game.js";
+import { BACKEND_URL } from "./config.js";
 
-const generateUniqueId = () => {
+export const generateUniqueId = () => {
   return Math.random().toString(36).substr(2, 9); // Example unique ID generation
 };
 
-document.addEventListener("DOMContentLoaded", () => {
-  
+const getUniqueId = () => {
+  // Check if the unique ID is already stored in sessionStorage
+  let uniqid = sessionStorage.getItem("uniqid");
+  if (!uniqid) {
+    // If not found, generate a new ID and store it in sessionStorage
+    uniqid = generateUniqueId();
+    sessionStorage.setItem("uniqid", uniqid);
+  }
+  return uniqid;
+};
 
+// let uniqid = generateUniqueId();
+let uniqid = getUniqueId();
+
+document.addEventListener("DOMContentLoaded", () => {
   const tid = document.getElementById("your-id");
-  let uniqid = generateUniqueId();
   tid.textContent = `your uniq id:` + uniqid;
   console.log("working", uniqid);
 
-  fetchAndDrawTable();
+  fetchAndDrawTable(uniqid);
   drawDeckTable();
 
+  // setInterval(() => {
+  //   fetchAndDrawTable(uniqid);
+  //   drawDeckTable();
+  // }, 5000);
 
-  setInterval(() => {
-    fetchAndDrawTable();
-    drawDeckTable();
-  }, 5000);
+  const handleSSEMessage = (event) => {
+    const data = JSON.parse(event.data);
+    // Check for specific event types if needed
+    if (data.message === "Game Updated") {
+      // Update UI with updated game data
+      // For example, you can call a function to fetch and draw the table again
+      console.log("need update");
+      fetchAndDrawTable(uniqid);
+      drawDeckTable();
+      // fetchAndDrawTable();
+      // drawDeckTable();
+    }
+  };
+
+  // Establish SSE connection
+  const source = new EventSource(`${BACKEND_URL}/games/subscribeToUpdates`);
+
+  // Handle SSE messages
+  source.addEventListener("message", handleSSEMessage);
+  // Function to handle SSE messages
+
+
 
   // AddCard Part
   const addCardButton = document.getElementById("add-newrow");
@@ -32,7 +66,10 @@ document.addEventListener("DOMContentLoaded", () => {
   // AddPlayer Part
   const addPlayerButton = document.getElementById("add-player");
   addPlayerButton.addEventListener("click", () => {
+    // window.location.href = "test.html";
     handleCreatePlayer(uniqid);
+    // var url = "http://localhost:3000"; 
+    // window.open(url);
   });
 
   // init game
@@ -44,8 +81,16 @@ document.addEventListener("DOMContentLoaded", () => {
   // end turn
   const endturnButton = document.getElementById("end-turn");
   endturnButton.addEventListener("click", () => {
-    endTurn();
+    endTurn(uniqid);
   });
 
   // Do not declare function that getElementByID and we don't have that id in html !!
 });
+
+
+// function toGame() {
+//   window.location.href = "test.html";
+// }
+
+export {uniqid}
+

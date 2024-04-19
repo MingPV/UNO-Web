@@ -9,5 +9,6 @@ router.post("/", gameController.initGame);
 router.get("/get", gameController.getGame);
 router.get('/getRnd', gameController.getRandomCardFromDeck);
 router.post('/update', gameController.updateGame);
+router.get('/subscribeToUpdates', gameController.subscribeToUpdates);
 
 export default router;

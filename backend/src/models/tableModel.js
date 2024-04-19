@@ -1,13 +1,14 @@
 import mongoose from "mongoose";
 
 const tableSchema = new mongoose.Schema({
+  unique: {
+    type: String,
+  },
   playername: {
     type: String,
-    required: true,
   },
   playerid: {
     type: String,
-    required: true,
   },
   value: {
     type: String,

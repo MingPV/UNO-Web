@@ -1,6 +1,9 @@
 import mongoose from "mongoose";
 
 const cardSchema = new mongoose.Schema({
+  unique: {
+    type: String,
+  },
   playername: {
     type: String,
   },

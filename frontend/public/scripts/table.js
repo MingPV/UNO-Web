@@ -12,8 +12,9 @@ import {
   getGame,
 } from "./api.js";
 import { drawDeckTable, handlePlayCard, handleUno } from "./game.js";
+import { uniqid } from "./main.js";
 
-async function drawTable(players, cards, topCard) {
+async function drawTable(players, cards, topCard, unique) {
   const table = document.getElementById("main-table-body");
 
   table.innerHTML = "";
@@ -70,6 +71,12 @@ async function drawTable(players, cards, topCard) {
 
     for (const card of playercards) {
       //row.insertCell().innerText = card.value + " " + card.color;
+      //console.log("card player ", card.unique, unique);
+      if (card.unique != unique) {
+        //console.log("card player ", card.unique, unique);
+        continue;
+        //button.innerText = "play " + card.value + " " + color;
+      }
 
       // play button
 
@@ -78,8 +85,16 @@ async function drawTable(players, cards, topCard) {
         for (const color of colors) {
           const button = document.createElement("button");
 
-          button.addEventListener("click", () => handlePlayCard(color, card));
-          button.innerText = "play " + card.value + " " + color;
+          button.addEventListener("click", () => handlePlayCard(color, card, uniqid));
+
+          if (card.unique === player.unique) {
+            button.innerText = "play " + card.value + " " + color;
+          }
+          // else {
+          //   button.innerText = "cannot see";
+          // }
+
+
           // button.style.backgroundImage = "url('../scripts/assets/wild.png')";
           // button.style.height = "6rem";
           // button.style.width = "4rem";
@@ -93,10 +108,16 @@ async function drawTable(players, cards, topCard) {
         const button = document.createElement("button");
 
         button.addEventListener("click", () =>
-          handlePlayCard(card.color, card)
+          handlePlayCard(card.color, card, uniqid)
         );
-        button.innerText = "play " + card.value + " " + card.color;
-        //button.style.backgroundImage = `url("../scripts/assets/${card.value}_${card.color}.png")`;
+
+        if (card.unique === player.unique) {
+          button.innerText = "play " + card.value + " " + card.color;
+        }
+        else {
+          button.innerText = "cannot see";
+        }
+        // button.style.backgroundImage = `url("../scripts/assets/${card.value}_${card.color}.png")`;
 
         // button.style.height = "6rem";
         // button.style.width = "4rem";
@@ -108,9 +129,9 @@ async function drawTable(players, cards, topCard) {
 
         button.value = card._id;
 
-        button.value = card._id;
+        // button.value = card._id;
 
-        row.insertCell().appendChild(button);
+        // row.insertCell().appendChild(button);
       }
       //console.log("wat the fuc\n");
       //console.log(card);
@@ -129,18 +150,19 @@ async function drawTable(players, cards, topCard) {
     "Number of Players: " + playersAfterUpdate.length;
 }
 
-export async function fetchAndDrawTable() {
+export async function fetchAndDrawTable(uniqid) {
   const players = await getPlayers();
   const cards = await getCards();
   const topCard = await getTopCard();
 
-  await drawTable(players, cards, topCard);
+  await drawTable(players, cards, topCard, uniqid);
 }
 
 async function updateArrayCard(players, cards) {
   for (const player of players) {
     const tmpcards = [];
     for (const card of cards) {
+      // console.log(card.unique);
       if (card.playerid == player._id) {
         tmpcards.push(card);
       }
@@ -155,13 +177,13 @@ async function updateArrayCard(players, cards) {
 
 //   await createTopCard(id);
 //   await deleteCard(id);
-
+// hi hi hihi hih ih i i
 //   await fetchAndDrawTable();
 // }
 
 export async function handleDeletePlayer(id) {
   await deletePlayer(id);
-  await fetchAndDrawTable();
+  await fetchAndDrawTable(uniqid);
 }
 
 export async function handleCreateCard() {
@@ -185,6 +207,7 @@ export async function handleCreateCard() {
 
   card.playername = players[game.playerTurn].name;
   card.playerid = players[game.playerTurn]._id;
+  card.unique = players[game.playerTurn].unique;
 
   game.isDraw = true;
   //console.log(card);
@@ -196,8 +219,8 @@ export async function handleCreateCard() {
   // colorToAdd.value = "";
   //clearFilter();
 
-  await fetchAndDrawTable(); // don't know why it's not refresh here fix it later
-  await drawDeckTable();
+  //await fetchAndDrawTable(uniqid); // don't know why it's not refresh here fix it later
+  //await drawDeckTable();
 }
 
 export async function handleTestUpdate(id) {

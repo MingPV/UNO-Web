@@ -49,9 +49,18 @@ export async function updateCard(card) {
 
 
 
-export async function createTopCard(id) {
-  await fetch(`${BACKEND_URL}/tables/${id}`, {
+export async function createTopCard(card) {
+  console.log("TopCard", card);
+  // await fetch(`${BACKEND_URL}/tables/${card}`, {
+  //   method: "POST",
+  // });
+
+  await fetch(`${BACKEND_URL}/tables/${card}`, {
     method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(card),
   });
 }
 

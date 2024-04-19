@@ -13,19 +13,25 @@ import {
   initGame,
   updateCard,
 } from "./api.js";
+import { uniqid } from "./main.js";
 
 import { fetchAndDrawTable } from "./table.js";
 
 export async function handleInitGame(uniqid) {
   await initGame();
+  console.log("working initing");
 
   const players = await getPlayers();
   const drawPromises = players.map(async (player) => {
-    for (let i = 0; i < 7; ++i)
+    for (let i = 0; i < 2; ++i) {
       await drawCard(player._id); // Wait for each card to be drawn
+      // console.log(player.unique);
+    }
+      ///
+      // await drawCard(uniqid); // Wait for each card to be drawn
   });
   await Promise.all(drawPromises);
-  await fetchAndDrawTable();
+  await fetchAndDrawTable(uniqid);
   await drawDeckTable();
 }
 
@@ -47,71 +53,75 @@ export async function drawDeckTable() {
 
   //gamedeck
 
-  const deckCountElement = document.getElementById("deck-count");
-  const previousCount = parseInt(deckCountElement.dataset.count) || 0;
+  // const deckCountElement = document.getElementById("deck-count");
+  // const previousCount = parseInt(deckCountElement.dataset.count) || 0;
 
-  game.gameDeck.sort((a, b) => {
-    if (a.color < b.color) return -1;
-    if (a.color > b.color) return 1;
+  // game.gameDeck.sort((a, b) => {
+  //   if (a.color < b.color) return -1;
+  //   if (a.color > b.color) return 1;
 
-    if (a.value < b.value) return -1;
-    if (a.value > b.value) return 1;
+  //   if (a.value < b.value) return -1;
+  //   if (a.value > b.value) return 1;
 
-    return 0;
-  });
+  //   return 0;
+  // });
 
-  if (game.gameDeck.length !== previousCount) {
-    deckCountElement.textContent = `Number of cards in the deck: ${game.gameDeck.length}`;
-    deckCountElement.dataset.count = game.gameDeck.length;
-  }
+  // if (game.gameDeck.length !== previousCount) {
+  //   deckCountElement.textContent = `Number of cards in the deck: ${game.gameDeck.length}`;
+  //   deckCountElement.dataset.count = game.gameDeck.length;
+  // }
 
-  const table = document.getElementById("deck-table");
-  table.innerHTML = "";
+  // const table = document.getElementById("deck-table");
+  // table.innerHTML = "";
 
-  game.gameDeck.forEach((card) => {
-    const cardElement = document.createElement("div");
-    cardElement.textContent = `${card.value} - ${card.color}`;
-    table.appendChild(cardElement);
-  });
+  // game.gameDeck.forEach((card) => {
+  //   const cardElement = document.createElement("div");
+  //   cardElement.textContent = `${card.value} - ${card.color}`;
+  //   table.appendChild(cardElement);
+  // });
 
-  // Used deck
-  const usedCountElement = document.getElementById("used-count");
-  const previousCount1 = parseInt(usedCountElement.dataset.count) || 0;
+  // // Used deck
+  // const usedCountElement = document.getElementById("used-count");
+  // const previousCount1 = parseInt(usedCountElement.dataset.count) || 0;
 
-  game.usedDeck.sort((a, b) => {
-    if (a.color < b.color) return -1;
-    if (a.color > b.color) return 1;
+  // game.usedDeck.sort((a, b) => {
+  //   if (a.color < b.color) return -1;
+  //   if (a.color > b.color) return 1;
 
-    if (a.value < b.value) return -1;
-    if (a.value > b.value) return 1;
+  //   if (a.value < b.value) return -1;
+  //   if (a.value > b.value) return 1;
 
-    return 0;
-  });
+  //   return 0;
+  // });
 
-  if (game.usedDeck.length !== previousCount1) {
-    usedCountElement.textContent = `Number of used card: ${game.usedDeck.length}`;
-    usedCountElement.dataset.count = game.usedDeck.length;
-  }
+  // if (game.usedDeck.length !== previousCount1) {
+  //   usedCountElement.textContent = `Number of used card: ${game.usedDeck.length}`;
+  //   usedCountElement.dataset.count = game.usedDeck.length;
+  // }
 
-  const table1 = document.getElementById("used-table");
-  table1.innerHTML = "";
+  // const table1 = document.getElementById("used-table");
+  // table1.innerHTML = "";
 
-  game.usedDeck.forEach((card) => {
-    const cardElement = document.createElement("div");
-    cardElement.textContent = `${card.value} - ${card.color}`;
-    table1.appendChild(cardElement); // Append to table1, not table
-  });
+  // game.usedDeck.forEach((card) => {
+  //   const cardElement = document.createElement("div");
+  //   cardElement.textContent = `${card.value} - ${card.color}`;
+  //   table1.appendChild(cardElement); // Append to table1, not table
+  // });
 }
 
 async function drawCard(playerid) {
   const card = await getRandomCardFromDeck();
+  const players = await getPlayers();
+  const player = players.find(player => player._id === playerid);
+  //console.log(player);
   card.playername = "a";
   card.playerid = playerid;
-  //console.log(card);
+  card.unique = player.unique;
+  // console.log("what the fuck drawing card",card);
   await createCard(card);
 }
 
-export async function handlePlayCard(color, card) {
+export async function handlePlayCard(color, card, uniqid) {
   // logic not fully implement
 
   const players = await getPlayers();
@@ -128,7 +138,7 @@ export async function handlePlayCard(color, card) {
     return;
   }
   const topCard = await getTopCard();
-  console.log(topCard);
+  //console.log(topCard);
   if (
     topCard != null &&
     card.color != topCard.color &&
@@ -147,7 +157,7 @@ export async function handlePlayCard(color, card) {
   const cards = await getCards();
 
   if (card.value == "draw2") {
-    const index =
+    let index =
       players.findIndex((player) => player._id == card.playerid) +
       game.gameDirection;
     if (index == players.length) {
@@ -174,7 +184,7 @@ export async function handlePlayCard(color, card) {
     // }
     game.isSkip = true;
   } else if (card.value == "wild4") {
-    const index =
+    let index =
       players.findIndex((player) => player._id == card.playerid) +
       game.gameDirection;
     //console.log("iddd", index);
@@ -194,13 +204,14 @@ export async function handlePlayCard(color, card) {
   game.usedDeck.push(card);
   //console.log("player card leght", players[game.playerTurn].cards.length);
   if (players[game.playerTurn].cards.length == 2) {
+    console.log("Uno!!")
     game.isPress = true;
   }
 
   game.isPlayed = true;
 
   if (players[game.playerTurn].cards.length == 1) {
-    endGame();
+    endGame(players[game.playerTurn].name);
   }
   // game.playerTurn += game.gameDirection;
   // if (game.playerTurn >= players.length) {
@@ -215,10 +226,10 @@ export async function handlePlayCard(color, card) {
   // console.log(game);
   // console.log(game1);
 
-  await createTopCard(card._id);
+  await createTopCard(card);
   await deleteCard(card._id);
-  await fetchAndDrawTable();
-  await drawDeckTable();
+  //await fetchAndDrawTable(uniqid);
+  //await drawDeckTable();
 }
 
 // export async function handleDeleteCard(id) {
@@ -228,7 +239,7 @@ export async function handlePlayCard(color, card) {
 //   await deleteCard(id);
 //   await fetchAndDrawTable();
 // }
-export async function endTurn() {
+export async function endTurn(uniqid) {
   const game = await getGame();
   const players = await getPlayers();
 
@@ -240,25 +251,25 @@ export async function endTurn() {
     return;
   }
 
-  if (!(game.isPlayed === false || game.isDraw === false)) {
-    alert("must play or draw first");
-    return;
-  }
+  // if (!(game.isPlayed === false || game.isDraw === false)) {
+  //   alert("must play or draw first");
+  //   return;
+  // }
 
   if (game.isPress == true) {
     const tid = players[game.playerTurn]._id;
     game.pressedTime.sort((a, b) => {
-      if (a.id < b.id) return -1;
-      if (a.id > b.id) return 1;
-
       if (a.date < b.date) return -1;
       if (a.date > b.date) return 1;
 
+      if (a.id < b.id) return -1;
+      if (a.id > b.id) return 1;
+      
       return 0;
     });
-    //console.log(game.pressedTime);
+    console.log(game.pressedTime);
     const tin = game.pressedTime.findIndex((a) => a.id == tid);
-    if (tin != 0) {
+    if (tin != 0 && game.pressedTime.length != 0) {
       drawCard(tid);
       drawCard(tid);
     }
@@ -286,14 +297,15 @@ export async function endTurn() {
   game.isPress = false;
   game.isDraw = false;
   await updateGame(game);
-  await drawDeckTable();
+  //await drawDeckTable();
 }
 
 export async function handleUno(id, date) {
   const game = await getGame();
   const players = await getPlayers();
+  console.log(game.isPress)
   if (game.isPress == true) {
-    //console.log("player date", id, date);
+    console.log("player date", id, date);
     let a = {};
     a.id = id;
     a.date = date;
@@ -302,11 +314,13 @@ export async function handleUno(id, date) {
     alert("now is not the time");
     return;
   }
-  await drawDeckTable();
+  
   await updateGame(game);
+  //await drawDeckTable();
 }
 
-export async function endGame() {
+export async function endGame(playerName) {
   const res = document.getElementById("game-res");
-  res.textContent = `the winner is: ${players[game.playerTurn].name}`;
+  res.textContent = `the winner is: ${playerName}`;
+  
 }

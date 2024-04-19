@@ -104,12 +104,12 @@ export const initGame = async (req, res) => {
 };
 
 export const getGame = async (req, res) => {
-  console.log("working getted");
+  //console.log("working getted");
   res.status(200).send(await Game.findOne());
 };
 
 export const getRandomCardFromDeck = async (req, res) => {
-  console.log("working rnd");
+  //console.log("working rnd");
   try {
     const game = await Game.findOne();
 
@@ -153,7 +153,7 @@ export const updateGame = async (req, res) => {
     if (!game) {
       return res.status(404).json({ error: "Game not found." });
     }
-
+    sendSSE({ message: "Game Updated", game });
     res.status(200).json({ message: "OK" });
   } catch (err) {
     if (err.name === "ValidationError") {
@@ -163,4 +163,50 @@ export const updateGame = async (req, res) => {
     }
   }
   //res.status(200).send(await Game.findOne());
+};
+
+// Maintain a list of clients (browsers) connected to the SSE stream
+const clients = new Map();
+
+// Function to send SSE to all connected clients
+const sendSSE = (data) => {
+  clients.forEach((connections) => {
+    connections.forEach((connection) => {
+      connection.res.write(`data: ${JSON.stringify(data)}\n\n`);
+    });
+  });
+};
+
+export const subscribeToUpdates = (req, res) => {
+  // Set headers for SSE
+  res.setHeader("Content-Type", "text/event-stream");
+  res.setHeader("Cache-Control", "no-cache");
+  res.setHeader("Connection", "keep-alive");
+
+  // Keep the connection open
+  res.flushHeaders();
+
+  // Add the client's connection to the map of clients
+  const clientId = req.query.clientId; // Assuming each client has a unique identifier
+  const connection = { req, res };
+
+  if (clients.has(clientId)) {
+    clients.get(clientId).push(connection);
+  } else {
+    clients.set(clientId, [connection]);
+  }
+
+  // Remove the client's connection from the map when the connection closes
+  req.on("close", () => {
+    if (clients.has(clientId)) {
+      const connections = clients.get(clientId);
+      const index = connections.findIndex((conn) => conn === connection);
+      if (index !== -1) {
+        connections.splice(index, 1);
+        if (connections.length === 0) {
+          clients.delete(clientId);
+        }
+      }
+    }
+  });
 };
