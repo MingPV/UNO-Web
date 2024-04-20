@@ -139,10 +139,30 @@ async function drawTable(players, cards, topCard, unique) {
       // }
       // //console.log("wat the fuc\n");
       // //console.log(card);
-      if (card.color == "wild") {
+      if (card.value == "wild") {
         const wildButton = document.createElement("button");
         wildButton.innerText = "play " + card.value + " Wild";
         wildButton.style.backgroundImage = "url('../scripts/assets/wild.png')";
+        wildButton.style.height = "6rem";
+        wildButton.style.width = "4rem";
+        wildButton.style.backgroundSize = "cover";
+        wildButton.style.backgroundColor = "transparent";
+        wildButton.style.border = "none";
+        wildButton.addEventListener("click", () => {
+          // Remove the wild button
+          wildButton.parentNode.removeChild(wildButton);
+          // Show buttons for each color
+          const colors = ["red", "blue", "green", "yellow"];
+          for (const color of colors) {
+            const button = createColorButton(card, color);
+            row.insertCell().appendChild(button);
+          }
+        });
+        row.insertCell().appendChild(wildButton);
+      } else if (card.value == 'wild4') {
+        const wildButton = document.createElement("button");
+        wildButton.innerText = "play " + card.value + " Wild";
+        wildButton.style.backgroundImage = "url('../scripts/assets/wild4.png')";
         wildButton.style.height = "6rem";
         wildButton.style.width = "4rem";
         wildButton.style.backgroundSize = "cover";

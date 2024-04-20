@@ -10,8 +10,8 @@ export const generateUniqueId = () => {
 const getUniqueId = () => {
   // Check if the unique ID is already stored in sessionStorage
   let uniqid = sessionStorage.getItem("uniqid");
-  //console.log("uniq === ",uniqid)
-  if (!uniqid) {
+  console.log("uniq === ",uniqid)
+  if (uniqid == null) {
     // If not found, generate a new ID and store it in sessionStorage
     uniqid = generateUniqueId();
     sessionStorage.setItem("uniqid", uniqid);
@@ -20,20 +20,20 @@ const getUniqueId = () => {
 };
 
 // let uniqid = generateUniqueId();
-let uniqid = getUniqueId();
-
+// let uniqid = getUniqueId();
+let uniqid;
 
 document.addEventListener("DOMContentLoaded", () => {
   let addFlag = sessionStorage.getItem("addFlag");
   //console.log("Rbefore ", addFlag);
   //console.log(typeof addFlag);
-
+  uniqid = getUniqueId();
   if (addFlag == 'true'){
     const start_con = document.getElementsByClassName("start-con")[0];
     start_con.style.display = "none";
   }
 
-
+  
 
   const tid = document.getElementById("your-id");
   tid.textContent = `your uniq id:` + uniqid;
