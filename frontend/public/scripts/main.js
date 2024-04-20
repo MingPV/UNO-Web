@@ -10,6 +10,7 @@ export const generateUniqueId = () => {
 const getUniqueId = () => {
   // Check if the unique ID is already stored in sessionStorage
   let uniqid = sessionStorage.getItem("uniqid");
+  //console.log("uniq === ",uniqid)
   if (!uniqid) {
     // If not found, generate a new ID and store it in sessionStorage
     uniqid = generateUniqueId();
@@ -21,18 +22,25 @@ const getUniqueId = () => {
 // let uniqid = generateUniqueId();
 let uniqid = getUniqueId();
 
+
 document.addEventListener("DOMContentLoaded", () => {
+  let addFlag = sessionStorage.getItem("addFlag");
+  //console.log("Rbefore ", addFlag);
+  //console.log(typeof addFlag);
+
+  if (addFlag == 'true'){
+    const start_con = document.getElementsByClassName("start-con")[0];
+    start_con.style.display = "none";
+  }
+
+
+
   const tid = document.getElementById("your-id");
   tid.textContent = `your uniq id:` + uniqid;
-  console.log("working", uniqid);
+  console.log("working", uniqid, sessionStorage);
 
   fetchAndDrawTable(uniqid);
   drawDeckTable();
-
-  // setInterval(() => {
-  //   fetchAndDrawTable(uniqid);
-  //   drawDeckTable();
-  // }, 5000);
 
   const handleSSEMessage = (event) => {
     const data = JSON.parse(event.data);
@@ -43,8 +51,6 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log("need update");
       fetchAndDrawTable(uniqid);
       drawDeckTable();
-      // fetchAndDrawTable();
-      // drawDeckTable();
     }
   };
 
@@ -66,10 +72,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // AddPlayer Part
   const addPlayerButton = document.getElementById("add-player");
   addPlayerButton.addEventListener("click", () => {
-    // window.location.href = "test.html";
     handleCreatePlayer(uniqid);
-    // var url = "http://localhost:3000"; 
-    // window.open(url);
+    manage();
   });
 
   // init game
@@ -84,10 +88,38 @@ document.addEventListener("DOMContentLoaded", () => {
     endTurn(uniqid);
   });
 
-  // Do not declare function that getElementByID and we don't have that id in html !!
+
+
+
 });
 
+function manage() {
+  let addFlag = sessionStorage.getItem("addFlag");
+  //console.log("before ", addFlag);
+  if (addFlag == 'true'){
+    //console.log("endFlag");
+    return;
+  }
+  if (addFlag == null) {
+    sessionStorage.setItem("addFlag", "true"); // Store a string, not a boolean
 
+    addFlag = sessionStorage.getItem("addFlag"); // Update addFlag after setting it
+    //console.log("after", addFlag); // Now it will log "true"
+    
+    const start_con = document.getElementsByClassName("start-con")[0];
+    start_con.style.display = "none";
+  }
+}
+
+// function manage() {
+//   var playerName =
+//     document.getElementById("player-name-to-add").value;
+//   if (playerName.trim() !== "")
+//     // Trim removes any leading/trailing whitespace
+//     window.location.href = "game.html";
+//   const start_con = document.getElementsByClassName("start-con");
+//   start_con.style.display = "none";
+// }
 // function toGame() {
 //   window.location.href = "test.html";
 // }

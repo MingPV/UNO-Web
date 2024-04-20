@@ -13,7 +13,7 @@ import {
   initGame,
   updateCard,
 } from "./api.js";
-import { uniqid } from "./main.js";
+//import { uniqid } from "./main.js";
 
 import { fetchAndDrawTable } from "./table.js";
 
@@ -31,8 +31,9 @@ export async function handleInitGame(uniqid) {
       // await drawCard(uniqid); // Wait for each card to be drawn
   });
   await Promise.all(drawPromises);
-  await fetchAndDrawTable(uniqid);
-  await drawDeckTable();
+  const game = await getGame();
+  await updateGame(game);
+  //await drawDeckTable();
 }
 
 export async function drawDeckTable() {

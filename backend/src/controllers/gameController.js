@@ -96,6 +96,7 @@ export const initGame = async (req, res) => {
     });
     console.log("what1 ", game.gameDeck.length);
     await game.save();
+    //sendSSE({ message: "Game Updated", game });
     res.status(200).json({ message: "OK" });
     //io.emit("gameInit", game);
   } catch (err) {

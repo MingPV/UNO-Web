@@ -1,0 +1,103 @@
+body {
+  text-align: center; /* Center inline elements */
+  background-color: rgb(241, 241, 241);
+  font-family: "Roboto", sans-serif;
+}
+button {
+  font-family: "Roboto", sans-serif;
+}
+
+.label {
+  font-size: 3rem;
+  padding: 2rem;
+  width: auto;
+}
+
+.container {
+  margin: 0 auto; /* Center block-level elements */
+  width: 80%; /* Adjust as needed */
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  justify-content: center;
+}
+
+.start-con {
+  height: 100vh;
+  display: flex;
+  width: 100%;
+  justify-items: center;
+  background-image: linear-gradient(to bottom, #f2f2f2, #bdbdbd);
+}
+
+.info-con {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Space between children */
+  align-items: center; /* Center children horizontally */
+  text-align: center;
+  width: 90%;
+  margin: auto; /* Center horizontally */
+  height: auto;
+}
+
+.info-con img {
+  width: 30rem;
+  margin: 2rem;
+}
+
+#init-game {
+  width: 5rem auto;
+  margin: 1.5rem;
+}
+
+.add-player-con,
+.init-btn {
+  font-size: 1rem;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5rem;
+  background-color: rgb(227, 227, 227);
+  box-shadow: 0.2rem 0.2rem 0.2rem rgba(0.2, 0.2, 0.2, 0.2);
+}
+
+.sub-add-player-con,
+#add-player,
+.init-btn {
+  padding: 1rem;
+  margin: 0.5rem;
+  border-radius: 4rem;
+  width: 26rem;
+  height: 4rem;
+  border: none;
+  font-size: 1.6rem;
+}
+.sub-add-player-con {
+  flex: 75%;
+}
+
+.sub-add-player-con:hover,
+.sub-add-player-con:focus {
+  border-color: gray;
+}
+
+#add-player {
+  flex: 25%;
+}
+
+#add-player:hover {
+  background-color: rgb(179, 179, 179);
+}
+
+#add-player {
+  width: 8rem;
+}
+
+.player-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+}

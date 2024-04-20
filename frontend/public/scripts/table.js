@@ -29,6 +29,7 @@ async function drawTable(players, cards, topCard, unique) {
 
   players = await getPlayers();
   cards = await getCards();
+  const game = await getGame();
   await updateArrayCard(players, cards);
   // getNewPlayers
   const playersAfterUpdate = await getPlayers();
@@ -47,19 +48,22 @@ async function drawTable(players, cards, topCard, unique) {
     button.addEventListener("click", () => handleDeletePlayer(button.value));
     button.innerText = " delete ";
     button.value = player._id;
-
+    button.style.display = "none";
     rowInHead.insertCell().appendChild(button);
 
-    const button1 = document.createElement("button");
+    if (game.isPress == true && player.unique == unique) {
+      const button1 = document.createElement("button");
 
-    button1.addEventListener("click", () => {
-      handleUno(button1.value, new Date().getTime());
-      button1.style.display = "none"; // Hide button1 when clicked
-    });
-    button1.innerText = " Uno!!! ";
-    button1.value = player._id;
+      button1.addEventListener("click", () => {
+        handleUno(button1.value, new Date().getTime());
+        button1.style.display = "none"; // Hide button1 when clicked
+      });
 
-    rowInHead.insertCell().appendChild(button1);
+      button1.innerText = " Uno!!! ";
+      button1.value = player._id;
+
+      rowInHead.insertCell().appendChild(button1);
+    }
 
     //console.log("what ", player._id, button.value)
   }
@@ -80,61 +84,85 @@ async function drawTable(players, cards, topCard, unique) {
 
       // play button
 
-      const colors = ["red", "blue", "green", "yellow"];
+      // const colors = ["red", "blue", "green", "yellow"];
+      // if (card.color == "wild") {
+      //   for (const color of colors) {
+      //     const button = document.createElement("button");
+
+      //     button.addEventListener("click", () => handlePlayCard(color, card, uniqid));
+
+      //     if (card.unique === player.unique) {
+      //       button.innerText = "play " + card.value + " " + color;
+      //     }
+      //     // else {
+      //     //   button.innerText = "cannot see";
+      //     // }
+
+
+      //     button.style.backgroundImage = "url('../scripts/assets/wild.png')";
+      //     button.style.height = "6rem";
+      //     button.style.width = "4rem";
+      //     button.style.backgroundSize = "cover";
+      //     button.style.backgroundColor = "transparent";
+      //     button.style.border = "none";
+
+      //     row.insertCell().appendChild(button);
+      //   }
+      // } else {
+      //   const button = document.createElement("button");
+
+      //   button.addEventListener("click", () =>
+      //     handlePlayCard(card.color, card, uniqid)
+      //   );
+
+      //   if (card.unique === player.unique) {
+      //     button.innerText = "play " + card.value + " " + card.color;
+      //   }
+      //   else {
+      //     button.innerText = "cannot see";
+      //   }
+      //   button.style.backgroundImage = `url("../scripts/assets/${card.value}_${card.color}.png")`;
+
+      //   button.style.height = "6rem";
+      //   button.style.width = "4rem";
+      //   button.style.backgroundSize = "cover";
+      //   button.style.backgroundColor = "transparent";
+      //   button.style.border = "none";
+
+      //   row.insertCell().appendChild(button);
+
+      //   button.value = card._id;
+
+      //   // button.value = card._id;
+
+      //   // row.insertCell().appendChild(button);
+      // }
+      // //console.log("wat the fuc\n");
+      // //console.log(card);
       if (card.color == "wild") {
-        for (const color of colors) {
-          const button = document.createElement("button");
-
-          button.addEventListener("click", () => handlePlayCard(color, card, uniqid));
-
-          if (card.unique === player.unique) {
-            button.innerText = "play " + card.value + " " + color;
+        const wildButton = document.createElement("button");
+        wildButton.innerText = "play " + card.value + " Wild";
+        wildButton.style.backgroundImage = "url('../scripts/assets/wild.png')";
+        wildButton.style.height = "6rem";
+        wildButton.style.width = "4rem";
+        wildButton.style.backgroundSize = "cover";
+        wildButton.style.backgroundColor = "transparent";
+        wildButton.style.border = "none";
+        wildButton.addEventListener("click", () => {
+          // Remove the wild button
+          wildButton.parentNode.removeChild(wildButton);
+          // Show buttons for each color
+          const colors = ["red", "blue", "green", "yellow"];
+          for (const color of colors) {
+            const button = createColorButton(card, color);
+            row.insertCell().appendChild(button);
           }
-          // else {
-          //   button.innerText = "cannot see";
-          // }
-
-
-          // button.style.backgroundImage = "url('../scripts/assets/wild.png')";
-          // button.style.height = "6rem";
-          // button.style.width = "4rem";
-          // button.style.backgroundSize = "cover";
-          // button.style.backgroundColor = "transparent";
-          // button.style.border = "none";
-
-          row.insertCell().appendChild(button);
-        }
+        });
+        row.insertCell().appendChild(wildButton);
       } else {
-        const button = document.createElement("button");
-
-        button.addEventListener("click", () =>
-          handlePlayCard(card.color, card, uniqid)
-        );
-
-        if (card.unique === player.unique) {
-          button.innerText = "play " + card.value + " " + card.color;
-        }
-        else {
-          button.innerText = "cannot see";
-        }
-        // button.style.backgroundImage = `url("../scripts/assets/${card.value}_${card.color}.png")`;
-
-        // button.style.height = "6rem";
-        // button.style.width = "4rem";
-        // button.style.backgroundSize = "cover";
-        // button.style.backgroundColor = "transparent";
-        // button.style.border = "none";
-
+        const button = createColorButton(card, card.color);
         row.insertCell().appendChild(button);
-
-        button.value = card._id;
-
-        // button.value = card._id;
-
-        // row.insertCell().appendChild(button);
       }
-      //console.log("wat the fuc\n");
-      //console.log(card);
     }
   }
 
@@ -148,6 +176,19 @@ async function drawTable(players, cards, topCard, unique) {
 
   tablefoot.insertRow().insertCell().innerText =
     "Number of Players: " + playersAfterUpdate.length;
+}
+
+function createColorButton(card, color) {
+  const button = document.createElement("button");
+  button.innerText = "play " + card.value + " " + color;
+  button.style.backgroundImage = `url("../scripts/assets/${card.value}_${color}.png")`;
+  button.style.height = "6rem";
+  button.style.width = "4rem";
+  button.style.backgroundSize = "cover";
+  button.style.backgroundColor = "transparent";
+  button.style.border = "none";
+  button.addEventListener("click", () => handlePlayCard(color, card, uniqid));
+  return button;
 }
 
 export async function fetchAndDrawTable(uniqid) {
