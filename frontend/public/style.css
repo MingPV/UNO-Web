@@ -1,8 +1,73 @@
+.div1 {
+  display: flex;
+  background-color: rgb(177, 249, 249);
+  flex-direction: column;
+
+}
+
+.divtop {
+  display: flex;
+  background-color: aquamarine;
+  flex-direction: row;
+}
+
+.divbottom {
+  display: flex;
+  background-color: rgb(228, 200, 255);
+  flex-direction: column;
+
+
+}
+
+.playerProfiles {
+  font-family: Courier, monospace;
+  display: flex;
+  background-color: rgb(248, 212, 212);
+  flex-direction: column;
+
+}
+
+.gameButton {
+  background-color: blue;
+  display: flex;
+  flex-direction: row;
+  align-self: flex-end;
+}
+
+.mycard {
+
+  background-color: teal;
+  display: flex;
+  flex-direction: row;
+  align-self: center;
+
+
+}
+
+
+.cards {
+  background-color: yellowgreen;
+  display: flex;
+  flex-direction: column;
+}
+
+.Topcardpage {
+  font-family: Courier, monospace;
+  background-color: rgb(201, 255, 148);
+  display: flex;
+}
+
+.justDetail {
+  font-family: Courier, monospace;
+}
+
 body {
-  text-align: center; /* Center inline elements */
+  text-align: center;
+  /* Center inline elements */
   background-color: rgb(241, 241, 241);
   font-family: "Roboto", sans-serif;
 }
+
 button {
   font-family: "Roboto", sans-serif;
 }
@@ -14,8 +79,10 @@ button {
 }
 
 .container {
-  margin: 0 auto; /* Center block-level elements */
-  width: 80%; /* Adjust as needed */
+  margin: 0 auto;
+  /* Center block-level elements */
+  width: 80%;
+  /* Adjust as needed */
   display: flex;
   flex-direction: column;
   justify-items: center;
@@ -33,11 +100,14 @@ button {
 .info-con {
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* Space between children */
-  align-items: center; /* Center children horizontally */
+  justify-content: space-between;
+  /* Space between children */
+  align-items: center;
+  /* Center children horizontally */
   text-align: center;
   width: 90%;
-  margin: auto; /* Center horizontally */
+  margin: auto;
+  /* Center horizontally */
   height: auto;
 }
 
@@ -75,6 +145,7 @@ button {
   border: none;
   font-size: 1.6rem;
 }
+
 .sub-add-player-con {
   flex: 75%;
 }
@@ -100,4 +171,41 @@ button {
   display: flex;
   flex-direction: column;
   justify-content: start;
+}
+
+
+/* CSS */
+.button-74 {
+  background-color: #fbeee0;
+  border: 2px solid #422800;
+  border-radius: 30px;
+  box-shadow: #422800 4px 4px 0 0;
+  color: #422800;
+  cursor: pointer;
+  display: inline-block;
+  font-weight: 600;
+  font-size: 18px;
+  padding: 0 18px;
+  line-height: 50px;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-74:hover {
+  background-color: #fff;
+}
+
+.button-74:active {
+  box-shadow: #422800 2px 2px 0 0;
+  transform: translate(2px, 2px);
+}
+
+@media (min-width: 768px) {
+  .button-74 {
+    min-width: 120px;
+    padding: 0 25px;
+  }
 }

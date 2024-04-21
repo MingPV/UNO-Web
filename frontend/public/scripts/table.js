@@ -200,7 +200,7 @@ async function drawTable(players, cards, topCard, unique) {
 
 function createColorButton(card, color) {
   const button = document.createElement("button");
-  button.innerText = "play " + card.value + " " + color;
+  //button.innerText = "play " + card.value + " " + color;
   button.style.backgroundImage = `url("../scripts/assets/${card.value}_${color}.png")`;
   button.style.height = "6rem";
   button.style.width = "4rem";
