@@ -10,18 +10,20 @@ export const generateUniqueId = () => {
 const getUniqueId = () => {
   // Check if the unique ID is already stored in sessionStorage
   let uniqid = sessionStorage.getItem("uniqid");
-  console.log("uniq === ",uniqid)
-  if (uniqid == null) {
+  console.log("session ",sessionStorage)
+  if (!uniqid) {
     // If not found, generate a new ID and store it in sessionStorage
     uniqid = generateUniqueId();
     sessionStorage.setItem("uniqid", uniqid);
+    //sessionStorage.setItem("uniqid", uniqid);
   }
   return uniqid;
 };
 
 // let uniqid = generateUniqueId();
 // let uniqid = getUniqueId();
-let uniqid;
+let uniqid = 'temp';
+let reflag = 0;
 
 document.addEventListener("DOMContentLoaded", () => {
   let addFlag = sessionStorage.getItem("addFlag");
@@ -33,11 +35,13 @@ document.addEventListener("DOMContentLoaded", () => {
     start_con.style.display = "none";
   }
 
-  
+  //uniqid = getUniqueId();
 
   const tid = document.getElementById("your-id");
+  
   tid.textContent = `your uniq id:` + uniqid;
-  console.log("working", uniqid, sessionStorage);
+
+  console.log("working", uniqid, sessionStorage, reflag);
 
   fetchAndDrawTable(uniqid);
   drawDeckTable();
@@ -52,6 +56,13 @@ document.addEventListener("DOMContentLoaded", () => {
       fetchAndDrawTable(uniqid);
       drawDeckTable();
     }
+    else if (data.message === "Player Updated") {
+      // Update UI with updated game data
+      // For example, you can call a function to fetch and draw the table again
+      console.log("need update");
+      fetchAndDrawTable(uniqid);
+      drawDeckTable();
+    }
   };
 
   // Establish SSE connection
@@ -59,8 +70,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Handle SSE messages
   source.addEventListener("message", handleSSEMessage);
-  // Function to handle SSE messages
 
+  const source2 = new EventSource(`${BACKEND_URL}/players/subscribeToUpdates`);
+  source2.addEventListener("message", handleSSEMessage);
 
 
   // AddCard Part
@@ -72,6 +84,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // AddPlayer Part
   const addPlayerButton = document.getElementById("add-player");
   addPlayerButton.addEventListener("click", () => {
+    uniqid = getUniqueId();
     handleCreatePlayer(uniqid);
     manage();
   });
@@ -95,6 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function manage() {
   let addFlag = sessionStorage.getItem("addFlag");
+  //uniqid = getUniqueId();
   //console.log("before ", addFlag);
   if (addFlag == 'true'){
     //console.log("endFlag");

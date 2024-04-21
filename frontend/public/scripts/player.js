@@ -8,9 +8,9 @@ export async function handleCreatePlayer(uniqid) {
         alert("Enter player name")
         return;
     }
-
+    console.log("what the fuc creating");
     await createPlayer({ name: nameToAdd.value, unique: uniqid});
-    await fetchAndDrawTable(uniqid);
+    //await fetchAndDrawTable(uniqid);
 
     nameToAdd.value = "";
 }
