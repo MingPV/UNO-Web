@@ -104,6 +104,21 @@ export const initGame = async (req, res) => {
   }
 };
 
+export const endGame = async (req, res) => {
+  try {
+    // await Game.deleteMany();
+    // await Card.deleteMany();
+    // await Table.deleteMany();
+    // await Player.deleteMany();
+    console.log("ending ganme");
+    sendSSE({ message: "Game Ended"});
+    res.status(200).json({ message: "OK" });
+    //io.emit("gameInit", game);
+  } catch (err) {
+    console.error("Error ending game:", err);
+  }
+};
+
 export const getGame = async (req, res) => {
   //console.log("working getted");
   res.status(200).send(await Game.findOne());

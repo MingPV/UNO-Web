@@ -98,6 +98,12 @@ export async function initGame() {
   });
 }
 
+export async function endGame() {
+  await fetch(`${BACKEND_URL}/games/end`, {
+    method: "POST",
+  });
+}
+
 export async function getGame() {
   const game = await fetch(`${BACKEND_URL}/games/get`).then((r) => r.json());
   return game;

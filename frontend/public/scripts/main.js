@@ -1,6 +1,7 @@
 import { fetchAndDrawTable, handleCreateCard } from "./table.js";
 import { handleCreatePlayer } from "./player.js";
-import { handleInitGame, drawDeckTable, endTurn } from "./game.js";
+import { handleInitGame, drawDeckTable, endTurn, handleEndGame } from "./game.js";
+import { getPlayers,getGame } from "./api.js";
 import { BACKEND_URL } from "./config.js";
 
 export const generateUniqueId = () => {
@@ -10,7 +11,7 @@ export const generateUniqueId = () => {
 const getUniqueId = () => {
   // Check if the unique ID is already stored in sessionStorage
   let uniqid = sessionStorage.getItem("uniqid");
-  console.log("session ",sessionStorage)
+  console.log("session ", sessionStorage)
   if (!uniqid) {
     // If not found, generate a new ID and store it in sessionStorage
     uniqid = generateUniqueId();
@@ -29,36 +30,39 @@ document.addEventListener("DOMContentLoaded", () => {
   let addFlag = sessionStorage.getItem("addFlag");
   //console.log("Rbefore ", addFlag);
   //console.log(typeof addFlag);
-  //const a = document.getElementsByClassName("div1")[0];
-  //a.style.display = "none";
+  const a = document.getElementsByClassName("div1")[0];
+  a.style.display = "none";
   uniqid = getUniqueId();
-  if (addFlag == 'true'){
+  if (addFlag == 'true') {
     const start_con = document.getElementsByClassName("start-con")[0];
     start_con.style.display = "none";
-    //const a = document.getElementsByClassName("div1")[0];
-    //a.style.display = "block";
+    console.log("showing");
+    a.style.display = "block";
   }
 
-  
-  // let winFlag = sessionStorage.getItem("winFlag");
-  // if (winFlag == 'true'){
-  //   const a = document.getElementsByClassName("div1")[0];
-  //   a.style.display = "none";
-  // }
+  let winFlag = sessionStorage.getItem("winFlag");
+  if (winFlag == 'true') {
+    const a = document.getElementsByClassName("div1")[0];
+    a.style.display = "none";
+
+    const res = document.getElementById("ok-text");
+    res.textContent = `game ended`;
+  }
   //uniqid = getUniqueId();
 
   const tid = document.getElementById("your-id");
-  
+
   tid.textContent = `your uniq id:` + uniqid;
 
   console.log("working", uniqid, sessionStorage, reflag);
 
-  fetchAndDrawTable(uniqid);
-  drawDeckTable();
+  //fetchAndDrawTable(uniqid);
+  //drawDeckTable();
 
   const handleSSEMessage = (event) => {
     const data = JSON.parse(event.data);
     // Check for specific event types if needed
+    console.log("sse", data);
     if (data.message === "Game Updated") {
       // Update UI with updated game data
       // For example, you can call a function to fetch and draw the table again
@@ -73,6 +77,20 @@ document.addEventListener("DOMContentLoaded", () => {
       fetchAndDrawTable(uniqid);
       drawDeckTable();
     }
+    else if (data.message === "Game Ended") {
+      // Update UI with updated game data
+      // For example, you can call a function to fetch and draw the table again
+      console.log("need update endedgame");
+      // const res = document.getElementById("ok-text");
+      // const game = getGame();
+      // const players = getPlayers();
+      // console.log("wwww", game, players);
+      // res.textContent = `the winner is: ${players[game.playerTurn].name}`;
+      // sessionStorage.setItem("winFlag", "true");
+      // const a = document.getElementsByClassName("div1")[0];
+      // a.style.display = "none";
+      getWinner();
+    }
   };
 
   // Establish SSE connection
@@ -84,7 +102,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // AddCard Part
   const addCardButton = document.getElementById("add-newrow");
   addCardButton.addEventListener("click", () => {
-    handleCreateCard();
+    handleCreateCard(uniqid);
   });
 
   // AddPlayer Part
@@ -116,7 +134,7 @@ function manage() {
   let addFlag = sessionStorage.getItem("addFlag");
   //uniqid = getUniqueId();
   //console.log("before ", addFlag);
-  if (addFlag == 'true'){
+  if (addFlag == 'true') {
     //console.log("endFlag");
     return;
   }
@@ -125,9 +143,11 @@ function manage() {
 
     addFlag = sessionStorage.getItem("addFlag"); // Update addFlag after setting it
     //console.log("after", addFlag); // Now it will log "true"
-    
+
     const start_con = document.getElementsByClassName("start-con")[0];
     start_con.style.display = "none";
+    const a = document.getElementsByClassName("div1")[0];
+    a.style.display = "block";
   }
 }
 
@@ -144,5 +164,17 @@ function manage() {
 //   window.location.href = "test.html";
 // }
 
-export {uniqid}
+async function getWinner() {
+  const res = document.getElementById("ok-text");
+  const game = await getGame();
+  const players = await getPlayers();
+  console.log("wwww", game, players);
+  res.textContent = `the winner is: ${players[game.playerTurn].name}`;
+  sessionStorage.setItem("winFlag", "true");
+  const a = document.getElementsByClassName("div1")[0];
+  a.style.display = "none";
+}
+
+
+export { uniqid }
 

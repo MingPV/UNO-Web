@@ -200,11 +200,14 @@ async function drawTable(players, cards, topCard, unique) {
 
 
 
-  rowfoot.insertCell().innerText = topCard
-    ? "Top Card : " + topCard.value + " " + topCard.color
-    : "Top Card: ";
-  rowfoot.insertCell().innerText = `<img src="../scripts/assets/${card.value}_${color}.png" alt="topcardddd" />`;
-
+  var textCell = rowfoot.insertCell();
+  textCell.innerText = topCard ? "Top Card: " + topCard.value + " " + topCard.color : "Top Card: ";
+  
+  // Insert cell for image representation of top card
+  var imageCell = rowfoot.insertCell();
+  if (topCard) {
+      imageCell.innerHTML = `<img src="../scripts/assets/${topCard.value}_${topCard.color}.png" alt="topcardddd" />`;
+  }
 
   tablefoot.insertRow().insertCell().innerText =
     "Number of Players: " + playersAfterUpdate.length;
@@ -263,7 +266,7 @@ export async function handleDeletePlayer(id) {
   //await fetchAndDrawTable(uniqid);
 }
 
-export async function handleCreateCard() {
+export async function handleCreateCard(uniqid) {
   // const playerNameToAdd = document.getElementById("playerName-to-add");
   // const playeridToAdd = document.getElementById("playerid-to-add");
   // const valueToAdd = document.getElementById("value-to-add");
@@ -271,6 +274,10 @@ export async function handleCreateCard() {
   const game = await getGame();
   const players = await getPlayers();
   // Check First
+  if (uniqid != players[game.playerTurn].unique) {
+    alert("wrong turn");
+    return;
+  }
 
   if (game.isPlayed == true) {
     alert("already played");

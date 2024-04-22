@@ -12,6 +12,7 @@ import {
   updateGame,
   initGame,
   updateCard,
+  endGame,
 } from "./api.js";
 //import { uniqid } from "./main.js";
 
@@ -23,7 +24,7 @@ export async function handleInitGame(uniqid) {
 
   const players = await getPlayers();
   const drawPromises = players.map(async (player) => {
-    for (let i = 0; i < 2; ++i) {
+    for (let i = 0; i < 1; ++i) {
       await drawCard(player._id); // Wait for each card to be drawn
       // console.log(player.unique);
     }
@@ -212,7 +213,7 @@ export async function handlePlayCard(color, card, uniqid) {
   game.isPlayed = true;
 
   if (players[game.playerTurn].cards.length == 1) {
-    endGame(players[game.playerTurn].name);
+    handleEndGame(players[game.playerTurn].name);
   }
   // game.playerTurn += game.gameDirection;
   // if (game.playerTurn >= players.length) {
@@ -246,7 +247,10 @@ export async function endTurn(uniqid) {
 
   console.log("ending turn",game);
   //console.log(game.isPlayed === false, game.isDraw === false);
-
+  if (uniqid != players[game.playerTurn].unique) {
+    alert("wrong turn");
+    return;
+  }
   if (game.isPlayed === false && game.isDraw === false) {
     alert("must play or draw first");
     return;
@@ -320,8 +324,11 @@ export async function handleUno(id, date) {
   //await drawDeckTable();
 }
 
-export async function endGame(playerName) {
-  const res = document.getElementById("game-res");
+export async function handleEndGame(playerName) {
+  const res = document.getElementById("ok-text");
   res.textContent = `the winner is: ${playerName}`;
-  
+  await endGame();
+  sessionStorage.setItem("winFlag", "true");
+  const a = document.getElementsByClassName("div1")[0];
+  a.style.display = "none";
 }
