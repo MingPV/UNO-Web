@@ -154,7 +154,7 @@ export const updateGame = async (req, res) => {
     if (!game) {
       return res.status(404).json({ error: "Game not found." });
     }
-    sendSSE({ message: "Game Updated", game });
+    sendSSE({ message: "Game Updated"});
     res.status(200).json({ message: "OK" });
   } catch (err) {
     if (err.name === "ValidationError") {
@@ -170,7 +170,7 @@ export const updateGame = async (req, res) => {
 const clients = new Map();
 
 // Function to send SSE to all connected clients
-const sendSSE = (data) => {
+export const sendSSE = (data) => {
   clients.forEach((connections) => {
     connections.forEach((connection) => {
       connection.res.write(`data: ${JSON.stringify(data)}\n\n`);

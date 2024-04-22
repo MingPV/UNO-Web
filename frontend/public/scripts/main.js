@@ -29,12 +29,22 @@ document.addEventListener("DOMContentLoaded", () => {
   let addFlag = sessionStorage.getItem("addFlag");
   //console.log("Rbefore ", addFlag);
   //console.log(typeof addFlag);
+  //const a = document.getElementsByClassName("div1")[0];
+  //a.style.display = "none";
   uniqid = getUniqueId();
   if (addFlag == 'true'){
     const start_con = document.getElementsByClassName("start-con")[0];
     start_con.style.display = "none";
+    //const a = document.getElementsByClassName("div1")[0];
+    //a.style.display = "block";
   }
 
+  
+  // let winFlag = sessionStorage.getItem("winFlag");
+  // if (winFlag == 'true'){
+  //   const a = document.getElementsByClassName("div1")[0];
+  //   a.style.display = "none";
+  // }
   //uniqid = getUniqueId();
 
   const tid = document.getElementById("your-id");
@@ -70,10 +80,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Handle SSE messages
   source.addEventListener("message", handleSSEMessage);
-
-  const source2 = new EventSource(`${BACKEND_URL}/players/subscribeToUpdates`);
-  source2.addEventListener("message", handleSSEMessage);
-
 
   // AddCard Part
   const addCardButton = document.getElementById("add-newrow");

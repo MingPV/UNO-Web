@@ -6,6 +6,15 @@
   height: 100vh;
 }
 
+.big-text {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 5em; /* Adjust the font size as needed */
+  color: green; /* Adjust the color as needed */
+}
+
 .divhead {
   display: flex;
   /* background-color: #bdede8; */

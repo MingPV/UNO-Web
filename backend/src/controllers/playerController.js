@@ -1,10 +1,10 @@
 import Player from "../models/playerModel.js"
-
+import { sendSSE } from "./gameController.js";
 
 export const createPlayer = async (req, res) => {
     const newPlayer = new Player(req.body);
     await newPlayer.save();
-    sendSSE({ message: "Player Updated", newPlayer });
+    sendSSE({ message: "Player Updated"});
     res.status(201).send("ok");
 };
 
@@ -50,47 +50,3 @@ export const deletePlayer = async (req, res) => {
   }
 };
 
-const clients = new Map();
-
-// Function to send SSE to all connected clients
-const sendSSE = (data) => {
-  clients.forEach((connections) => {
-    connections.forEach((connection) => {
-      connection.res.write(`data: ${JSON.stringify(data)}\n\n`);
-    });
-  });
-};
-
-export const subscribeToUpdates = (req, res) => {
-  // Set headers for SSE
-  res.setHeader("Content-Type", "text/event-stream");
-  res.setHeader("Cache-Control", "no-cache");
-  res.setHeader("Connection", "keep-alive");
-
-  // Keep the connection open
-  res.flushHeaders();
-
-  // Add the client's connection to the map of clients
-  const clientId = req.query.clientId; // Assuming each client has a unique identifier
-  const connection = { req, res };
-
-  if (clients.has(clientId)) {
-    clients.get(clientId).push(connection);
-  } else {
-    clients.set(clientId, [connection]);
-  }
-
-  // Remove the client's connection from the map when the connection closes
-  req.on("close", () => {
-    if (clients.has(clientId)) {
-      const connections = clients.get(clientId);
-      const index = connections.findIndex((conn) => conn === connection);
-      if (index !== -1) {
-        connections.splice(index, 1);
-        if (connections.length === 0) {
-          clients.delete(clientId);
-        }
-      }
-    }
-  });
-};
