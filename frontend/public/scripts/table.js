@@ -15,6 +15,8 @@ import { drawDeckTable, handlePlayCard, handleUno } from "./game.js";
 import { uniqid } from "./main.js";
 
 async function drawTable(players, cards, topCard, unique) {
+
+
   const table = document.getElementById("main-table-body");
 
   table.innerHTML = "";
@@ -38,11 +40,12 @@ async function drawTable(players, cards, topCard, unique) {
     const rowInHead = tablehead.insertRow();
     rowInHead.insertCell().innerText =
       player.name +
-      "( " +
-      player._id +
-      " )  has " +
+      " has " +
       player.cards.length +
       " cards left"; // prev is player.name
+    // player._id +
+    // " )  has " +
+
     const button = document.createElement("button");
 
     button.addEventListener("click", () => handleDeletePlayer(button.value));
@@ -189,13 +192,19 @@ async function drawTable(players, cards, topCard, unique) {
   //console.log("Top Card:", topCard);
 
   const rowfoot = tablefoot.insertRow();
+
+
   //console.log("top card", topCard);
   rowfoot.insertCell().innerText = topCard
     ? "Top Card : " + topCard.value + " " + topCard.color
     : "Top Card: ";
+  rowfoot.insertCell().innerText = `<img src="../scripts/assets/${card.value}_${color}.png" alt="topcardddd" />`;
+
 
   tablefoot.insertRow().insertCell().innerText =
     "Number of Players: " + playersAfterUpdate.length;
+
+
 }
 
 function createColorButton(card, color) {

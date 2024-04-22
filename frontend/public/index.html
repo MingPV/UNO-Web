@@ -5,24 +5,6 @@
   <meta charset="UTF-8" />
   <title>UNO Game</title>
   <link rel="stylesheet" href="style.css" />
-  <style>
-    .init-label {
-      font-size: 20px;
-      color: red;
-    }
-
-    .table-container {
-      display: flex;
-    }
-
-    #deck-table {
-      flex: 1;
-    }
-
-    #used-table {
-      flex: 1;
-    }
-  </style>
 </head>
 
 <body>
@@ -38,12 +20,18 @@
   </div>
 
   <div class="div1">
-    <div>
-      <label class="init-label">INIT FIRST BEFORE DO ANYTHING</label>
-      <div id="your-id">your uniq id: </div>
-      <button id="init-game" class="button-62">Init Game</button>
-      <br />
-      <br />
+    <div class="divhead">
+      <div class="notblurDivhead">
+        <div>
+          <div class="bg-image"></div>
+          <!-- <label class="init-label">New Game</label> -->
+          <div id="your-id">your uniq id: </div>
+          <button id="init-game" class="button-62">New Game</button>
+          <br />
+          <br />
+        </div>
+      </div>
+
     </div>
 
     <div class="divtop">
@@ -63,7 +51,9 @@
         <div id="game-res"><span style="color:red;">game result: </span></div>
         <div id="player-turn">current player turn: </div>
         <table>
-          <tfoot id="main-table-foot"></tfoot>
+          <tfoot id="main-table-foot">
+
+          </tfoot>
         </table>
         <div id="game-direction">Game direction: </div>
       </div>
@@ -73,25 +63,30 @@
 
     <div class="divbottom">
 
-      <div class="gameButton">
-        <br />
-        <button id="add-newrow" class="button-74" role="button">Draw Card</button>
-        <br />
-        <br />
-        <button id="end-turn" class="button-74" role="button">End Turn</button>
-        <br />
+      <div class="bottomnotblur">
+        <div class="gameButton">
+          <br />
+          <button id="add-newrow" class="button-74" role="button">Draw Card</button>
+          <br />
+          <br />
+          <button id="end-turn" class="button-74" role="button">End Turn</button>
+          <br />
+        </div>
+
+        <div class="mycard">
+          <table class="testtest">
+            <tbody id="main-table-body"></tbody>
+          </table>
+        </div>
+        <div class="justDetail">
+          <div id="deck-count">Number of cards in the deck: 0</div>
+          <div id="used-count">Number of cards used: 0</div>
+          <label class="card-deck">card deck, used deck</label>
+        </div>
       </div>
 
-      <div class="mycard">
-        <table class="testtest">
-          <tbody id="main-table-body"></tbody>
-        </table>
-      </div>
-      <div class="justDetail">
-        <div id="deck-count">Number of cards in the deck: 0</div>
-        <div id="used-count">Number of cards used: 0</div>
-        <label class="card-deck">card deck, used deck</label>
-      </div>
+
+
 
 
     </div>

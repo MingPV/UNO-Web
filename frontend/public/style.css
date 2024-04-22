@@ -1,45 +1,91 @@
 .div1 {
   display: flex;
   background-color: rgb(177, 249, 249);
+  background: url("scripts/assets/brickBG.jpg");
   flex-direction: column;
+  height: 100vh;
+}
+
+.divhead {
+  display: flex;
+  /* background-color: #bdede8; */
+  flex-direction: column;
+  flex: 15%;
+
+  background: transparent;
 
 }
+
+.notblurDivhead {
+  backdrop-filter: blur(7px);
+}
+
 
 .divtop {
   display: flex;
   background-color: aquamarine;
   flex-direction: row;
+  background: transparent;
+  flex: 100%;
+
 }
 
 .divbottom {
-  display: flex;
-  background-color: rgb(228, 200, 255);
-  flex-direction: column;
+
+
+  background-size: auto;
+  flex: 15%;
 
 
 }
+
+.bottomnotblur {
+  display: flex;
+  /* background-color: rgb(228, 200, 255); */
+  flex-direction: column;
+  backdrop-filter: blur(7px);
+}
+
+
 
 .playerProfiles {
   font-family: Courier, monospace;
   display: flex;
-  background-color: rgb(248, 212, 212);
+  background-color: rgb(251, 206, 206);
   flex-direction: column;
+  flex: 25%;
+  background: url("scripts/assets/brickBG.jpg");
+  color: #f2f2f2;
+  backdrop-filter: blur(7px);
+}
 
+.Topcardpage {
+  font-family: Courier, monospace;
+  background-color: rgb(157, 176, 184);
+  border-radius: 20px;
+  display: flex;
+  flex: 75%;
 }
 
 .gameButton {
   background-color: blue;
+  background: transparent;
   display: flex;
   flex-direction: row;
   align-self: flex-end;
+
+
+
 }
 
 .mycard {
 
   background-color: teal;
+  background: transparent;
   display: flex;
   flex-direction: row;
   align-self: center;
+  color: #f2f2f2;
 
 
 }
@@ -51,14 +97,11 @@
   flex-direction: column;
 }
 
-.Topcardpage {
-  font-family: Courier, monospace;
-  background-color: rgb(201, 255, 148);
-  display: flex;
-}
+
 
 .justDetail {
   font-family: Courier, monospace;
+  color: #f2f2f2;
 }
 
 body {
@@ -176,8 +219,9 @@ button {
 /* CSS */
 .button-62 {
   background: linear-gradient(to bottom right, #24ef50, #89ca33);
-  border: 0;
-  border-radius: 12px;
+  border: 1;
+  border-radius: 50px;
+  border-color: #007a3b;
   color: #FFFFFF;
   cursor: pointer;
   display: inline-block;
@@ -207,10 +251,10 @@ button {
 
 /* CSS */
 .button-74 {
-  background-color: #fbeee0;
-  border: 2px solid #422800;
+  background-color: #acfcfc;
+  border: 2px solid #000506;
   border-radius: 30px;
-  box-shadow: #422800 4px 4px 0 0;
+  box-shadow: #2e4044 4px 4px 0 0;
   color: #422800;
   cursor: pointer;
   display: inline-block;
@@ -226,7 +270,7 @@ button {
 }
 
 .button-74:hover {
-  background-color: #fff;
+  background-color: #5f8c90;
 }
 
 .button-74:active {
