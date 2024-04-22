@@ -197,6 +197,9 @@ async function drawTable(players, cards, topCard, unique) {
 
 
   //console.log("top card", topCard);
+
+
+
   rowfoot.insertCell().innerText = topCard
     ? "Top Card : " + topCard.value + " " + topCard.color
     : "Top Card: ";
@@ -218,6 +221,7 @@ function createColorButton(card, color, uniqid) {
   button.style.backgroundSize = "cover";
   button.style.backgroundColor = "transparent";
   button.style.border = "none";
+  button.style.cursor = "pointer";
   button.addEventListener("click", () => handlePlayCard(color, card, uniqid));
   return button;
 }

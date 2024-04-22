@@ -138,6 +138,7 @@ button {
   width: 100%;
   justify-items: center;
   background-image: linear-gradient(to bottom, #f2f2f2, #bdbdbd);
+  background: url("scripts/assets/brickBG.jpg");
 }
 
 .info-con {
@@ -148,7 +149,8 @@ button {
   align-items: center;
   /* Center children horizontally */
   text-align: center;
-  width: 90%;
+  width: 50%;
+  height: 50%;
   margin: auto;
   /* Center horizontally */
   height: auto;
