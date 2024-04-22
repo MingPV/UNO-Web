@@ -12,10 +12,12 @@ import {
   getGame,
 } from "./api.js";
 import { drawDeckTable, handlePlayCard, handleUno } from "./game.js";
-import { uniqid } from "./main.js";
+//import { uniqid } from "./main.js";
 
 async function drawTable(players, cards, topCard, unique) {
+  const tid = document.getElementById("your-id");
 
+  tid.textContent = `your uniq id:` + unique;
 
   const table = document.getElementById("main-table-body");
 
@@ -157,7 +159,7 @@ async function drawTable(players, cards, topCard, unique) {
           // Show buttons for each color
           const colors = ["red", "blue", "green", "yellow"];
           for (const color of colors) {
-            const button = createColorButton(card, color);
+            const button = createColorButton(card, color, unique);
             row.insertCell().appendChild(button);
           }
         });
@@ -177,13 +179,13 @@ async function drawTable(players, cards, topCard, unique) {
           // Show buttons for each color
           const colors = ["red", "blue", "green", "yellow"];
           for (const color of colors) {
-            const button = createColorButton(card, color);
+            const button = createColorButton(card, color, unique);
             row.insertCell().appendChild(button);
           }
         });
         row.insertCell().appendChild(wildButton);
       } else {
-        const button = createColorButton(card, card.color);
+        const button = createColorButton(card, card.color, unique);
         row.insertCell().appendChild(button);
       }
     }
@@ -207,7 +209,7 @@ async function drawTable(players, cards, topCard, unique) {
 
 }
 
-function createColorButton(card, color) {
+function createColorButton(card, color, uniqid) {
   const button = document.createElement("button");
   //button.innerText = "play " + card.value + " " + color;
   button.style.backgroundImage = `url("../scripts/assets/${card.value}_${color}.png")`;
@@ -221,6 +223,7 @@ function createColorButton(card, color) {
 }
 
 export async function fetchAndDrawTable(uniqid) {
+
   const players = await getPlayers();
   const cards = await getCards();
   const topCard = await getTopCard();
@@ -253,7 +256,7 @@ async function updateArrayCard(players, cards) {
 
 export async function handleDeletePlayer(id) {
   await deletePlayer(id);
-  await fetchAndDrawTable(uniqid);
+  //await fetchAndDrawTable(uniqid);
 }
 
 export async function handleCreateCard() {
