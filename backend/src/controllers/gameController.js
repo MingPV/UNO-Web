@@ -39,14 +39,14 @@ function generateDeck() {
   }
 
   // Add 4 colors of 0
-  for (let color of colors) {
-    deck.push(
-      new Card({
-        value: "0",
-        color: color,
-      })
-    );
-  }
+  // for (let color of colors) {
+  //   deck.push(
+  //     new Card({
+  //       value: "0",
+  //       color: color,
+  //     })
+  //   );
+  // }
 
   // Add wild and wild draw 4 cards
   for (let i = 0; i < 4; i++) {

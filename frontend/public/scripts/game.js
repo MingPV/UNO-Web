@@ -309,10 +309,15 @@ export async function handleUno(id, date) {
   const game = await getGame();
   const players = await getPlayers();
   console.log(game.isPress);
+
+  
+
+  let Id = players[players.findIndex(a => a.unique == id)]._id;
+
   if (game.isPress == true) {
     console.log("player date", id, date);
     let a = {};
-    a.id = id;
+    a.id = Id;
     a.date = date;
     game.pressedTime.push(a);
   } else {
@@ -321,7 +326,7 @@ export async function handleUno(id, date) {
   }
 
   await updateGame(game);
-  //await drawDeckTable();
+  await drawDeckTable();
 }
 
 export async function handleEndGame(playerName) {

@@ -51,28 +51,36 @@ async function drawTable(players, cards, topCard, unique) {
     button.innerText = " delete ";
     button.value = player._id;
     button.style.display = "none";
-    rowInHead.insertCell().appendChild(button);
+    //rowInHead.insertCell().appendChild(button);
 
     if (game.isPress == true && player.unique == unique) {
       // const unoButton = document.getElementById("uno-btn");
-      const button1 = document.createElement("button");
+      
+      console.log("what");
+      const button1 = document.getElementById("uno-btn");
+      button1.style.display = "block";
+      
+      // if (game.pressTime.findIndex(a => a.id === player._id) !== -1) {
+      //   button1.style.display = "none";
+      // }
       // const button1 = document.getElementById("uno-btn");
-      button1.addEventListener("click", () => {
-        handleUno(button1.value, new Date().getTime());
-        button1.style.display = "none"; // Hide button1 when clicked
-      });
-      const gameButton = document.getElementById("game-btn");
-      button1.innerText = " Uno!!! ";
-      button1.value = player._id;
-      button1.style.backgroundImage = "url('../scripts/assets/logo.png')";
-      button1.style.backgroundSize = "cover";
-      button1.style.width = "6rem";
-      button1.style.height = "4rem";
-      button1.style.backgroundColor = "transparent";
-      button1.style.border = "none";
+      // button1.addEventListener("click", async () => {
+      //   handleUno(button1.value, new Date().getTime());
+      //   button1.style.display = "none"; // Hide button1 when clicked
+      //   button1.remove();
+      // });
+      // //const gameButton = document.getElementById("game-btn");
+      // //button1.innerText = " Uno!!! ";
+      // button1.value = player._id;
+      // button1.style.backgroundImage = "url('../scripts/assets/logo.png')";
+      // button1.style.backgroundSize = "cover";
+      // button1.style.width = "6rem";
+      // button1.style.height = "4rem";
+      // button1.style.backgroundColor = "transparent";
+      // button1.style.border = "none";
       // unoButton.appendChild(button1);
       // rowInHead.insertCell().appendChild(button1);
-      gameButton.appendChild(button1);
+      //gameButton.appendChild(button1);
     }
 
     //console.log("what ", player._id, button.value)
@@ -152,7 +160,7 @@ async function drawTable(players, cards, topCard, unique) {
       // //console.log(card);
       if (card.value == "wild") {
         const wildButton = document.createElement("button");
-        wildButton.innerText = "play " + card.value + " Wild";
+        //wildButton.innerText = "play " + card.value + " Wild";
         wildButton.style.backgroundImage = "url('../scripts/assets/wild.png')";
         wildButton.style.height = "9rem";
         wildButton.style.width = "6rem";
@@ -172,7 +180,7 @@ async function drawTable(players, cards, topCard, unique) {
         row.insertCell().appendChild(wildButton);
       } else if (card.value == "wild4") {
         const wildButton = document.createElement("button");
-        wildButton.innerText = "play " + card.value + " Wild";
+        //wildButton.innerText = "play " + card.value + " Wild";
         wildButton.style.backgroundImage = "url('../scripts/assets/wild4.png')";
         wildButton.style.height = "9rem";
         wildButton.style.width = "6rem";
@@ -214,15 +222,16 @@ async function drawTable(players, cards, topCard, unique) {
   //     imageCell.innerHTML = `<img src="../scripts/assets/${topCard.value}_${topCard.color}.png" alt="topcardddd" />`;
   // }
   var imageElement = document.getElementById("topcard-image");
-
+  console.log("Top card: ", topCard);
   // Set the src attribute
-  if (topCard !== null) {
+  if (topCard !== undefined) {
     // Set the src attribute
+    imageElement.style.display = "block";
     imageElement.src = `../scripts/assets/${topCard.value}_${topCard.color}.png`;
     imageElement.alt = "cardddddddddd";
   } else {
     // Optionally, you can clear the src attribute if topCard is null
-    imageElement.src = "";
+    imageElement.style.display = "none";
   }
 
   tablefoot.insertRow().insertCell().innerText =

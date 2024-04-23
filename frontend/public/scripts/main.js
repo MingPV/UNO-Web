@@ -1,7 +1,7 @@
 import { fetchAndDrawTable, handleCreateCard } from "./table.js";
 import { handleCreatePlayer } from "./player.js";
-import { handleInitGame, drawDeckTable, endTurn, handleEndGame } from "./game.js";
-import { getPlayers,getGame } from "./api.js";
+import { handleInitGame, drawDeckTable, endTurn, handleEndGame, handleUno } from "./game.js";
+import { getPlayers,getGame,deletePlayer } from "./api.js";
 import { BACKEND_URL } from "./config.js";
 
 export const generateUniqueId = () => {
@@ -40,7 +40,6 @@ document.addEventListener("DOMContentLoaded", () => {
     a.style.display = "block";
   }
 
-
   // fetchAndDrawTable(uniqid);
   // drawDeckTable();
 
@@ -60,39 +59,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
   console.log("working", uniqid, sessionStorage, reflag);
 
-  //fetchAndDrawTable(uniqid);
-  //drawDeckTable();
+  //makeButton(uniqid);
 
-  const handleSSEMessage = (event) => {
+  fetchAndDrawTable(uniqid);
+  drawDeckTable();
+
+  const handleSSEMessage = async (event) => {
     const data = JSON.parse(event.data);
     // Check for specific event types if needed
     console.log("sse", data);
     if (data.message === "Game Updated") {
-      // Update UI with updated game data
-      // For example, you can call a function to fetch and draw the table again
       console.log("need update");
-      fetchAndDrawTable(uniqid);
-      drawDeckTable();
+      await fetchAndDrawTable(uniqid);
+      await drawDeckTable();
     }
     else if (data.message === "Player Updated") {
-      // Update UI with updated game data
-      // For example, you can call a function to fetch and draw the table again
       console.log("need update");
-      fetchAndDrawTable(uniqid);
-      drawDeckTable();
+      await fetchAndDrawTable(uniqid);
+      await drawDeckTable();
     }
     else if (data.message === "Game Ended") {
-      // Update UI with updated game data
-      // For example, you can call a function to fetch and draw the table again
       console.log("need update endedgame");
-      // const res = document.getElementById("ok-text");
-      // const game = getGame();
-      // const players = getPlayers();
-      // console.log("wwww", game, players);
-      // res.textContent = `the winner is: ${players[game.playerTurn].name}`;
-      // sessionStorage.setItem("winFlag", "true");
-      // const a = document.getElementsByClassName("div1")[0];
-      // a.style.display = "none";
       getWinner();
     }
   };
@@ -129,10 +116,61 @@ document.addEventListener("DOMContentLoaded", () => {
     endTurn(uniqid);
   });
 
-
-
-
+  
+  const end = document.getElementById("end");
+  end.addEventListener("click", () => {
+    deleteP(uniqid);
+    //end.style.display = "none";
+  });
+  // window.addEventListener("beforeunload", () => {
+  //   // Assuming you have a unique identifier for the player
+  //   // Call the function to delete the player
+  //   deleteP(uniqid);
+  // });
 });
+
+//let buttonInitialized = false;
+
+async function deleteP(uniqid){
+  try {
+    const players = await getPlayers();
+    const id = players.find(a => a.unique === uniqid)?._id; // Using optional chaining
+    if (id) {
+      await deletePlayer(id);
+      console.log("Player deleted successfully.");
+    } else {
+      console.log("Player not found.");
+    }
+  } catch (error) {
+    console.error("Error deleting player:", error);
+  }
+}
+
+let buttonInitialized = false;
+
+async function makeButton(uniqid) {
+  console.log("makeButton ", uniqid);
+  if (!buttonInitialized) {
+    const button1 = document.getElementById("uno-btn");
+    button1.style.display = "none";
+    //button1.id = "uno-btn";
+    button1.addEventListener("click", async () => {
+      handleUno(button1.value, new Date().getTime());
+      button1.style.display = "none"; // Hide button1 when clicked
+    });
+
+    button1.value = uniqid;
+    button1.style.backgroundImage = "url('../scripts/assets/logo.png')";
+    button1.style.backgroundSize = "cover";
+    button1.style.width = "6rem";
+    button1.style.height = "4rem";
+    button1.style.backgroundColor = "transparent";
+    button1.style.border = "none";
+
+    //document.body.appendChild(button1);
+    buttonInitialized = true;
+  }
+}
 
 async function manage() {
   let addFlag = sessionStorage.getItem("addFlag");
@@ -152,8 +190,9 @@ async function manage() {
     start_con.style.display = "none";
     const a = document.getElementsByClassName("div1")[0];
     a.style.display = "block";
-    await fetchAndDrawTable(uniqid);
-    await drawDeckTable();
+    makeButton(uniqid);
+    // await fetchAndDrawTable(uniqid);
+    // await drawDeckTable();
   }
 }
 
