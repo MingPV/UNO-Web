@@ -169,7 +169,7 @@ export async function handlePlayCard(color, card, uniqid) {
     }
     const id = players[index]._id;
     for (let i = 0; i < 2; ++i) {
-      drawCard(id);
+      await drawCard(id);
     }
   } else if (card.value == "reverse") {
     if (game.gameDirection == 1) {
@@ -199,7 +199,7 @@ export async function handlePlayCard(color, card, uniqid) {
     const id = players[index]._id;
 
     for (let i = 0; i < 4; ++i) {
-      drawCard(id);
+      await drawCard(id);
     }
   }
 
@@ -213,7 +213,7 @@ export async function handlePlayCard(color, card, uniqid) {
   game.isPlayed = true;
 
   if (players[game.playerTurn].cards.length == 1) {
-    handleEndGame(players[game.playerTurn].name);
+    await handleEndGame(players[game.playerTurn].name);
   }
   // game.playerTurn += game.gameDirection;
   // if (game.playerTurn >= players.length) {
@@ -275,8 +275,8 @@ export async function endTurn(uniqid) {
     console.log(game.pressedTime);
     const tin = game.pressedTime.findIndex((a) => a.id == tid);
     if (tin != 0 && game.pressedTime.length != 0) {
-      drawCard(tid);
-      drawCard(tid);
+      await drawCard(tid);
+      await drawCard(tid);
     }
     game.pressedTime = [];
   }

@@ -216,8 +216,14 @@ async function drawTable(players, cards, topCard, unique) {
   var imageElement = document.getElementById("topcard-image");
 
   // Set the src attribute
-  imageElement.src = `../scripts/assets/${topCard.value}_${topCard.color}.png`;
-  imageElement.alt = "cardddddddddd";
+  if (topCard !== null) {
+    // Set the src attribute
+    imageElement.src = `../scripts/assets/${topCard.value}_${topCard.color}.png`;
+    imageElement.alt = "cardddddddddd";
+  } else {
+    // Optionally, you can clear the src attribute if topCard is null
+    imageElement.src = "";
+  }
 
   tablefoot.insertRow().insertCell().innerText =
     "Number of Players: " + playersAfterUpdate.length;

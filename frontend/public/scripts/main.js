@@ -40,6 +40,10 @@ document.addEventListener("DOMContentLoaded", () => {
     a.style.display = "block";
   }
 
+
+  // fetchAndDrawTable(uniqid);
+  // drawDeckTable();
+
   let winFlag = sessionStorage.getItem("winFlag");
   if (winFlag == 'true') {
     const a = document.getElementsByClassName("div1")[0];
@@ -130,7 +134,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
-function manage() {
+async function manage() {
   let addFlag = sessionStorage.getItem("addFlag");
   //uniqid = getUniqueId();
   //console.log("before ", addFlag);
@@ -148,6 +152,8 @@ function manage() {
     start_con.style.display = "none";
     const a = document.getElementsByClassName("div1")[0];
     a.style.display = "block";
+    await fetchAndDrawTable(uniqid);
+    await drawDeckTable();
   }
 }
 
