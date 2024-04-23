@@ -5,8 +5,7 @@
   "main": "src/server.js",
   "type": "module",
   "scripts": {
-    "start": "node --watch src/server.js",
-    "dev": "nodemon --watch src/server.js"
+    "start": "node --watch src/server.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -17,7 +16,8 @@
   "devDependencies": {
     "@types/cors": "^2.8.14",
     "@types/express": "^4.17.17",
-    "@types/node": "^18.17.14",
-    "nodemon": "^3.1.0"
+    "@types/node": "^18.17.14"
+   
+
   }
 }

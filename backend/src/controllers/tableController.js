@@ -9,15 +9,6 @@ export const createCardAtTopOfTable = async (req, res) => {
         // just clear prev card
         await Table.deleteMany();
 
-        // Card.findOne({ _id: req.params.id })
-        //     .then(async (docs) => {
-        //         //console.log("Result :", docs);
-        //         const newTopCard = new Table({ playername: docs.playername, playerid: docs.playerid, value: docs.value, color: docs.color });
-        //         await newTopCard.save();
-        //     })
-        //     .catch((err) => {
-        //         console.log(err);
-        //     });
         const newTopCard = new Table(req.body);
         console.log("working top card",req.body)
         await newTopCard.save();

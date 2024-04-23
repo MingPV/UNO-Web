@@ -1,18 +1,15 @@
 import {
   createCard,
-  deleteCard,
   getCards,
   getPlayers,
   deletePlayer,
   inHandCardUpdate,
-  createTopCard,
   getTopCard,
   getRandomCardFromDeck,
   updateGame,
   getGame,
 } from "./api.js";
-import { drawDeckTable, handlePlayCard, handleUno } from "./game.js";
-//import { uniqid } from "./main.js";
+import { handlePlayCard } from "./game.js";
 
 async function drawTable(players, cards, topCard, unique) {
   const tid = document.getElementById("your-id");
@@ -41,9 +38,7 @@ async function drawTable(players, cards, topCard, unique) {
   for (const player of playersAfterUpdate) {
     const rowInHead = tablehead.insertRow();
     rowInHead.insertCell().innerText =
-      player.name + " has " + player.cards.length + " cards left"; // prev is player.name
-    // player._id +
-    // " )  has " +
+      player.name + " has " + player.cards.length + " cards left";
 
     const button = document.createElement("button");
 
@@ -51,39 +46,12 @@ async function drawTable(players, cards, topCard, unique) {
     button.innerText = " delete ";
     button.value = player._id;
     button.style.display = "none";
-    //rowInHead.insertCell().appendChild(button);
 
     if (game.isPress == true && player.unique == unique) {
-      // const unoButton = document.getElementById("uno-btn");
-      
       console.log("what");
       const button1 = document.getElementById("uno-btn");
       button1.style.display = "block";
-      
-      // if (game.pressTime.findIndex(a => a.id === player._id) !== -1) {
-      //   button1.style.display = "none";
-      // }
-      // const button1 = document.getElementById("uno-btn");
-      // button1.addEventListener("click", async () => {
-      //   handleUno(button1.value, new Date().getTime());
-      //   button1.style.display = "none"; // Hide button1 when clicked
-      //   button1.remove();
-      // });
-      // //const gameButton = document.getElementById("game-btn");
-      // //button1.innerText = " Uno!!! ";
-      // button1.value = player._id;
-      // button1.style.backgroundImage = "url('../scripts/assets/logo.png')";
-      // button1.style.backgroundSize = "cover";
-      // button1.style.width = "6rem";
-      // button1.style.height = "4rem";
-      // button1.style.backgroundColor = "transparent";
-      // button1.style.border = "none";
-      // unoButton.appendChild(button1);
-      // rowInHead.insertCell().appendChild(button1);
-      //gameButton.appendChild(button1);
     }
-
-    //console.log("what ", player._id, button.value)
   }
 
   for (const player of playersAfterUpdate) {
@@ -94,73 +62,12 @@ async function drawTable(players, cards, topCard, unique) {
       row.insertCell().innerText = player.name;
     }
     for (const card of playercards) {
-      //row.insertCell().innerText = card.value + " " + card.color;
-      //console.log("card player ", card.unique, unique);
       if (card.unique != unique) {
-        //console.log("card player ", card.unique, unique);
         continue;
-        //button.innerText = "play " + card.value + " " + color;
       }
 
-      // play button
-
-      // const colors = ["red", "blue", "green", "yellow"];
-      // if (card.color == "wild") {
-      //   for (const color of colors) {
-      //     const button = document.createElement("button");
-
-      //     button.addEventListener("click", () => handlePlayCard(color, card, uniqid));
-
-      //     if (card.unique === player.unique) {
-      //       button.innerText = "play " + card.value + " " + color;
-      //     }
-      //     // else {
-      //     //   button.innerText = "cannot see";
-      //     // }
-
-      //     button.style.backgroundImage = "url('../scripts/assets/wild.png')";
-      //     button.style.height = "6rem";
-      //     button.style.width = "4rem";
-      //     button.style.backgroundSize = "cover";
-      //     button.style.backgroundColor = "transparent";
-      //     button.style.border = "none";
-
-      //     row.insertCell().appendChild(button);
-      //   }
-      // } else {
-      //   const button = document.createElement("button");
-
-      //   button.addEventListener("click", () =>
-      //     handlePlayCard(card.color, card, uniqid)
-      //   );
-
-      //   if (card.unique === player.unique) {
-      //     button.innerText = "play " + card.value + " " + card.color;
-      //   }
-      //   else {
-      //     button.innerText = "cannot see";
-      //   }
-      //   button.style.backgroundImage = `url("../scripts/assets/${card.value}_${card.color}.png")`;
-
-      //   button.style.height = "6rem";
-      //   button.style.width = "4rem";
-      //   button.style.backgroundSize = "cover";
-      //   button.style.backgroundColor = "transparent";
-      //   button.style.border = "none";
-
-      //   row.insertCell().appendChild(button);
-
-      //   button.value = card._id;
-
-      //   // button.value = card._id;
-
-      //   // row.insertCell().appendChild(button);
-      // }
-      // //console.log("wat the fuc\n");
-      // //console.log(card);
       if (card.value == "wild") {
         const wildButton = document.createElement("button");
-        //wildButton.innerText = "play " + card.value + " Wild";
         wildButton.style.backgroundImage = "url('../scripts/assets/wild.png')";
         wildButton.style.height = "9rem";
         wildButton.style.width = "6rem";
@@ -180,7 +87,6 @@ async function drawTable(players, cards, topCard, unique) {
         row.insertCell().appendChild(wildButton);
       } else if (card.value == "wild4") {
         const wildButton = document.createElement("button");
-        //wildButton.innerText = "play " + card.value + " Wild";
         wildButton.style.backgroundImage = "url('../scripts/assets/wild4.png')";
         wildButton.style.height = "9rem";
         wildButton.style.width = "6rem";
@@ -217,10 +123,6 @@ async function drawTable(players, cards, topCard, unique) {
     : "Top Card: ";
 
   // Insert cell for image representation of top card
-  // var imageCell = rowfoot.insertCell();
-  // if (topCard) {
-  //     imageCell.innerHTML = `<img src="../scripts/assets/${topCard.value}_${topCard.color}.png" alt="topcardddd" />`;
-  // }
   var imageElement = document.getElementById("topcard-image");
   console.log("Top card: ", topCard);
   // Set the src attribute
@@ -240,7 +142,6 @@ async function drawTable(players, cards, topCard, unique) {
 
 function createColorButton(card, color, uniqid) {
   const button = document.createElement("button");
-  //button.innerText = "play " + card.value + " " + color;
   button.style.backgroundImage = `url("../scripts/assets/${card.value}_${color}.png")`;
   button.style.height = "9rem";
   button.style.width = "6rem";
@@ -274,25 +175,11 @@ async function updateArrayCard(players, cards) {
   }
 }
 
-// export async function handleDeleteCard(id) {
-//   // just delete in items and in player's hand we update every times when we fetchanddraw()
-
-//   await createTopCard(id);
-//   await deleteCard(id);
-// hi hi hihi hih ih i i
-//   await fetchAndDrawTable();
-// }
-
 export async function handleDeletePlayer(id) {
   await deletePlayer(id);
-  //await fetchAndDrawTable(uniqid);
 }
 
 export async function handleCreateCard(uniqid) {
-  // const playerNameToAdd = document.getElementById("playerName-to-add");
-  // const playeridToAdd = document.getElementById("playerid-to-add");
-  // const valueToAdd = document.getElementById("value-to-add");
-  // const colorToAdd = document.getElementById("color-to-add");
   const game = await getGame();
   const players = await getPlayers();
   // Check First
@@ -319,14 +206,6 @@ export async function handleCreateCard(uniqid) {
   //console.log(card);
   await createCard(card);
   await updateGame(game);
-  // playerNameToAdd.value = "";
-  //playeridToAdd.value = "";
-  // valueToAdd.value = "";
-  // colorToAdd.value = "";
-  //clearFilter();
-
-  //await fetchAndDrawTable(uniqid); // don't know why it's not refresh here fix it later
-  //await drawDeckTable();
 }
 
 export async function handleTestUpdate(id) {

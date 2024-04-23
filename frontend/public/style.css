@@ -285,12 +285,6 @@ button {
     padding: 0 25px;
   }
 
-  /* .add-player-con {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-  } */
-
   .sub-add-player-con {
     width: 120%;
     height: 2rem; /* Adjust height as needed */

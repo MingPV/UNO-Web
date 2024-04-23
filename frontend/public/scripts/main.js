@@ -28,8 +28,7 @@ let reflag = 0;
 
 document.addEventListener("DOMContentLoaded", () => {
   let addFlag = sessionStorage.getItem("addFlag");
-  //console.log("Rbefore ", addFlag);
-  //console.log(typeof addFlag);
+  
   const a = document.getElementsByClassName("div1")[0];
   a.style.display = "none";
   uniqid = getUniqueId();
@@ -120,16 +119,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const end = document.getElementById("end");
   end.addEventListener("click", () => {
     deleteP(uniqid);
-    //end.style.display = "none";
   });
-  // window.addEventListener("beforeunload", () => {
-  //   // Assuming you have a unique identifier for the player
-  //   // Call the function to delete the player
-  //   deleteP(uniqid);
-  // });
+ 
 });
 
-//let buttonInitialized = false;
 
 async function deleteP(uniqid){
   try {
@@ -153,7 +146,6 @@ async function makeButton(uniqid) {
   if (!buttonInitialized) {
     const button1 = document.getElementById("uno-btn");
     button1.style.display = "none";
-    //button1.id = "uno-btn";
     button1.addEventListener("click", async () => {
       handleUno(button1.value, new Date().getTime());
       button1.style.display = "none"; // Hide button1 when clicked
@@ -167,47 +159,27 @@ async function makeButton(uniqid) {
     button1.style.backgroundColor = "transparent";
     button1.style.border = "none";
 
-    //document.body.appendChild(button1);
     buttonInitialized = true;
   }
 }
 
 async function manage() {
   let addFlag = sessionStorage.getItem("addFlag");
-  //uniqid = getUniqueId();
-  //console.log("before ", addFlag);
   if (addFlag == 'true') {
-    //console.log("endFlag");
     return;
   }
   if (addFlag == null) {
     sessionStorage.setItem("addFlag", "true"); // Store a string, not a boolean
 
     addFlag = sessionStorage.getItem("addFlag"); // Update addFlag after setting it
-    //console.log("after", addFlag); // Now it will log "true"
 
     const start_con = document.getElementsByClassName("start-con")[0];
     start_con.style.display = "none";
     const a = document.getElementsByClassName("div1")[0];
     a.style.display = "block";
     makeButton(uniqid);
-    // await fetchAndDrawTable(uniqid);
-    // await drawDeckTable();
   }
 }
-
-// function manage() {
-//   var playerName =
-//     document.getElementById("player-name-to-add").value;
-//   if (playerName.trim() !== "")
-//     // Trim removes any leading/trailing whitespace
-//     window.location.href = "game.html";
-//   const start_con = document.getElementsByClassName("start-con");
-//   start_con.style.display = "none";
-// }
-// function toGame() {
-//   window.location.href = "test.html";
-// }
 
 async function getWinner() {
   const res = document.getElementById("ok-text");
