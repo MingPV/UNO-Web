@@ -52,9 +52,11 @@
             </table>
             <h1 id="game-res" style="font-size: 1rem">Game State:</h1>
             <div class="game-status">
-              <p class="topic">Current Player Turn :</p>
+              <p class="topic" style="font-size: 0.7rem">
+                Current Player Turn :
+              </p>
               <div id="player-turn"></div>
-              <p class="topic">Game Direction :</p>
+              <p class="topic" style="font-size: 0.7rem">Game Direction :</p>
               <div id="game-direction"></div>
             </div>
           </div>
@@ -79,7 +81,11 @@
 
         <div class="divbottom">
           <div class="bottomnotblur">
-            <div class="gameButton">
+            <div
+              class="gameButton"
+              id="game-btn"
+              style="display: flex; flex-direction: row-reverse"
+            >
               <br />
               <button id="add-newrow" class="button-74" role="button">
                 Draw Card
@@ -89,8 +95,6 @@
               <button id="end-turn" class="button-74" role="button">
                 End Turn
               </button>
-
-              <br />
             </div>
 
             <div class="mycard" style="display: flex; flex-direction: column">

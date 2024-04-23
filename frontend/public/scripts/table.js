@@ -54,17 +54,25 @@ async function drawTable(players, cards, topCard, unique) {
     rowInHead.insertCell().appendChild(button);
 
     if (game.isPress == true && player.unique == unique) {
+      // const unoButton = document.getElementById("uno-btn");
       const button1 = document.createElement("button");
-
+      // const button1 = document.getElementById("uno-btn");
       button1.addEventListener("click", () => {
         handleUno(button1.value, new Date().getTime());
         button1.style.display = "none"; // Hide button1 when clicked
       });
-
+      const gameButton = document.getElementById("game-btn");
       button1.innerText = " Uno!!! ";
       button1.value = player._id;
-
-      rowInHead.insertCell().appendChild(button1);
+      button1.style.backgroundImage = "url('../scripts/assets/logo.png')";
+      button1.style.backgroundSize = "cover";
+      button1.style.width = "6rem";
+      button1.style.height = "4rem";
+      button1.style.backgroundColor = "transparent";
+      button1.style.border = "none";
+      // unoButton.appendChild(button1);
+      // rowInHead.insertCell().appendChild(button1);
+      gameButton.appendChild(button1);
     }
 
     //console.log("what ", player._id, button.value)
