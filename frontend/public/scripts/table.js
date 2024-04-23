@@ -41,10 +41,7 @@ async function drawTable(players, cards, topCard, unique) {
   for (const player of playersAfterUpdate) {
     const rowInHead = tablehead.insertRow();
     rowInHead.insertCell().innerText =
-      player.name +
-      " has " +
-      player.cards.length +
-      " cards left"; // prev is player.name
+      player.name + " has " + player.cards.length + " cards left"; // prev is player.name
     // player._id +
     // " )  has " +
 
@@ -75,9 +72,11 @@ async function drawTable(players, cards, topCard, unique) {
 
   for (const player of playersAfterUpdate) {
     const row = table.insertRow();
-    row.insertCell().innerText = player.name;
-    const playercards = player.cards;
 
+    const playercards = player.cards;
+    if (player.uniqid == unique) {
+      row.insertCell().innerText = player.name;
+    }
     for (const card of playercards) {
       //row.insertCell().innerText = card.value + " " + card.color;
       //console.log("card player ", card.unique, unique);
@@ -102,7 +101,6 @@ async function drawTable(players, cards, topCard, unique) {
       //     // else {
       //     //   button.innerText = "cannot see";
       //     // }
-
 
       //     button.style.backgroundImage = "url('../scripts/assets/wild.png')";
       //     button.style.height = "6rem";
@@ -148,8 +146,8 @@ async function drawTable(players, cards, topCard, unique) {
         const wildButton = document.createElement("button");
         wildButton.innerText = "play " + card.value + " Wild";
         wildButton.style.backgroundImage = "url('../scripts/assets/wild.png')";
-        wildButton.style.height = "6rem";
-        wildButton.style.width = "4rem";
+        wildButton.style.height = "12rem";
+        wildButton.style.width = "8rem";
         wildButton.style.backgroundSize = "cover";
         wildButton.style.backgroundColor = "transparent";
         wildButton.style.border = "none";
@@ -164,12 +162,12 @@ async function drawTable(players, cards, topCard, unique) {
           }
         });
         row.insertCell().appendChild(wildButton);
-      } else if (card.value == 'wild4') {
+      } else if (card.value == "wild4") {
         const wildButton = document.createElement("button");
         wildButton.innerText = "play " + card.value + " Wild";
         wildButton.style.backgroundImage = "url('../scripts/assets/wild4.png')";
-        wildButton.style.height = "6rem";
-        wildButton.style.width = "4rem";
+        wildButton.style.height = "12rem";
+        wildButton.style.width = "8rem";
         wildButton.style.backgroundSize = "cover";
         wildButton.style.backgroundColor = "transparent";
         wildButton.style.border = "none";
@@ -195,32 +193,34 @@ async function drawTable(players, cards, topCard, unique) {
 
   const rowfoot = tablefoot.insertRow();
 
-
   //console.log("top card", topCard);
 
-
-
   var textCell = rowfoot.insertCell();
-  textCell.innerText = topCard ? "Top Card: " + topCard.value + " " + topCard.color : "Top Card: ";
-  
+  textCell.innerText = topCard
+    ? "Top Card: " + topCard.value + " " + topCard.color
+    : "Top Card: ";
+
   // Insert cell for image representation of top card
-  var imageCell = rowfoot.insertCell();
-  if (topCard) {
-      imageCell.innerHTML = `<img src="../scripts/assets/${topCard.value}_${topCard.color}.png" alt="topcardddd" />`;
-  }
+  // var imageCell = rowfoot.insertCell();
+  // if (topCard) {
+  //     imageCell.innerHTML = `<img src="../scripts/assets/${topCard.value}_${topCard.color}.png" alt="topcardddd" />`;
+  // }
+  var imageElement = document.getElementById("topcard-image");
+
+  // Set the src attribute
+  imageElement.src = `../scripts/assets/${topCard.value}_${topCard.color}.png`;
+  imageElement.alt = "cardddddddddd";
 
   tablefoot.insertRow().insertCell().innerText =
     "Number of Players: " + playersAfterUpdate.length;
-
-
 }
 
 function createColorButton(card, color, uniqid) {
   const button = document.createElement("button");
   //button.innerText = "play " + card.value + " " + color;
   button.style.backgroundImage = `url("../scripts/assets/${card.value}_${color}.png")`;
-  button.style.height = "6rem";
-  button.style.width = "4rem";
+  button.style.height = "12rem";
+  button.style.width = "8rem";
   button.style.backgroundSize = "cover";
   button.style.backgroundColor = "transparent";
   button.style.border = "none";
@@ -230,7 +230,6 @@ function createColorButton(card, color, uniqid) {
 }
 
 export async function fetchAndDrawTable(uniqid) {
-
   const players = await getPlayers();
   const cards = await getCards();
   const topCard = await getTopCard();

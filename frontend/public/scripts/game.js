@@ -24,12 +24,12 @@ export async function handleInitGame(uniqid) {
 
   const players = await getPlayers();
   const drawPromises = players.map(async (player) => {
-    for (let i = 0; i < 1; ++i) {
+    for (let i = 0; i < 2; ++i) {
       await drawCard(player._id); // Wait for each card to be drawn
       // console.log(player.unique);
     }
-      ///
-      // await drawCard(uniqid); // Wait for each card to be drawn
+    ///
+    // await drawCard(uniqid); // Wait for each card to be drawn
   });
   await Promise.all(drawPromises);
   const game = await getGame();
@@ -44,13 +44,13 @@ export async function drawDeckTable() {
   //console.log('current',game)
 
   const turn = document.getElementById("player-turn");
-  turn.textContent = `current player turn: ${players[game.playerTurn].name}`;
+  turn.textContent = `${players[game.playerTurn].name}`;
 
   const direct = document.getElementById("game-direction");
   if (game.gameDirection == 1) {
-    direct.textContent = `game direction: clockwise`;
+    direct.textContent = `clockwise`;
   } else {
-    direct.textContent = `game direction: counter-clockwise`;
+    direct.textContent = `counter-clockwise`;
   }
 
   //gamedeck
@@ -114,7 +114,7 @@ export async function drawDeckTable() {
 async function drawCard(playerid) {
   const card = await getRandomCardFromDeck();
   const players = await getPlayers();
-  const player = players.find(player => player._id === playerid);
+  const player = players.find((player) => player._id === playerid);
   //console.log(player);
   card.playername = "a";
   card.playerid = playerid;
@@ -206,7 +206,7 @@ export async function handlePlayCard(color, card, uniqid) {
   game.usedDeck.push(card);
   //console.log("player card leght", players[game.playerTurn].cards.length);
   if (players[game.playerTurn].cards.length == 2) {
-    console.log("Uno!!")
+    console.log("Uno!!");
     game.isPress = true;
   }
 
@@ -245,7 +245,7 @@ export async function endTurn(uniqid) {
   const game = await getGame();
   const players = await getPlayers();
 
-  console.log("ending turn",game);
+  console.log("ending turn", game);
   //console.log(game.isPlayed === false, game.isDraw === false);
   if (uniqid != players[game.playerTurn].unique) {
     alert("wrong turn");
@@ -269,7 +269,7 @@ export async function endTurn(uniqid) {
 
       if (a.id < b.id) return -1;
       if (a.id > b.id) return 1;
-      
+
       return 0;
     });
     console.log(game.pressedTime);
@@ -308,7 +308,7 @@ export async function endTurn(uniqid) {
 export async function handleUno(id, date) {
   const game = await getGame();
   const players = await getPlayers();
-  console.log(game.isPress)
+  console.log(game.isPress);
   if (game.isPress == true) {
     console.log("player date", id, date);
     let a = {};
@@ -319,7 +319,7 @@ export async function handleUno(id, date) {
     alert("now is not the time");
     return;
   }
-  
+
   await updateGame(game);
   //await drawDeckTable();
 }
