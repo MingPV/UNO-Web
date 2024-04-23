@@ -146,8 +146,8 @@ async function drawTable(players, cards, topCard, unique) {
         const wildButton = document.createElement("button");
         wildButton.innerText = "play " + card.value + " Wild";
         wildButton.style.backgroundImage = "url('../scripts/assets/wild.png')";
-        wildButton.style.height = "12rem";
-        wildButton.style.width = "8rem";
+        wildButton.style.height = "9rem";
+        wildButton.style.width = "6rem";
         wildButton.style.backgroundSize = "cover";
         wildButton.style.backgroundColor = "transparent";
         wildButton.style.border = "none";
@@ -166,8 +166,8 @@ async function drawTable(players, cards, topCard, unique) {
         const wildButton = document.createElement("button");
         wildButton.innerText = "play " + card.value + " Wild";
         wildButton.style.backgroundImage = "url('../scripts/assets/wild4.png')";
-        wildButton.style.height = "12rem";
-        wildButton.style.width = "8rem";
+        wildButton.style.height = "9rem";
+        wildButton.style.width = "6rem";
         wildButton.style.backgroundSize = "cover";
         wildButton.style.backgroundColor = "transparent";
         wildButton.style.border = "none";
@@ -219,8 +219,8 @@ function createColorButton(card, color, uniqid) {
   const button = document.createElement("button");
   //button.innerText = "play " + card.value + " " + color;
   button.style.backgroundImage = `url("../scripts/assets/${card.value}_${color}.png")`;
-  button.style.height = "12rem";
-  button.style.width = "8rem";
+  button.style.height = "9rem";
+  button.style.width = "6rem";
   button.style.backgroundSize = "cover";
   button.style.backgroundColor = "transparent";
   button.style.border = "none";
