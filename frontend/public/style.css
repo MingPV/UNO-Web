@@ -184,13 +184,14 @@ button {
 .sub-add-player-con,
 #add-player,
 .init-btn {
-  padding: 1rem;
+  padding: 0.5rem;
   margin: 0.5rem;
   border-radius: 4rem;
   width: 120%;
   /* height: 2rem; */
   border: none;
-  font-size: 1.6rem;
+  height: auto;
+  font-size: 1rem;
 }
 
 .sub-add-player-con:hover,
@@ -284,12 +285,6 @@ button {
     padding: 0 25px;
   }
 
-  /* .add-player-con {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-  } */
-
   .sub-add-player-con {
     width: 120%;
     height: 2rem; /* Adjust height as needed */
@@ -298,6 +293,10 @@ button {
 
   #add-player {
     width: 50%;
+  }
+
+  #main-table-head {
+    font-size: 0.7rem;
   }
 
   .divtop {
@@ -310,6 +309,11 @@ button {
 
   .Topcardpage {
     flex: 75%;
+  }
+
+  .playerProfiles p,
+  .Topcardpage p {
+    font-size: 0.7rem;
   }
 
   .div1 {
@@ -327,10 +331,6 @@ button {
   color: #2e4044;
   font-weight: bold;
   font-size: larger;
-}
-
-#main-table-body {
-  background-color: #24ef50;
 }
 
 .game-status {

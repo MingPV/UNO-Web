@@ -1,5 +1,4 @@
 import Card from "../models/cardModel.js";
-import Player from "../models/playerModel.js";
 import Game from "../models/gameModel.js";
 import Table from "../models/tableModel.js";
 
@@ -38,15 +37,7 @@ function generateDeck() {
     }
   }
 
-  // Add 4 colors of 0
-  for (let color of colors) {
-    deck.push(
-      new Card({
-        value: "0",
-        color: color,
-      })
-    );
-  }
+
 
   // Add wild and wild draw 4 cards
   for (let i = 0; i < 4; i++) {
@@ -106,14 +97,11 @@ export const initGame = async (req, res) => {
 
 export const endGame = async (req, res) => {
   try {
-    // await Game.deleteMany();
-    // await Card.deleteMany();
-    // await Table.deleteMany();
-    // await Player.deleteMany();
+    ;
     console.log("ending ganme");
     sendSSE({ message: "Game Ended"});
     res.status(200).json({ message: "OK" });
-    //io.emit("gameInit", game);
+   
   } catch (err) {
     console.error("Error ending game:", err);
   }
@@ -178,7 +166,7 @@ export const updateGame = async (req, res) => {
       res.status(500).json({ error: "Internal server error." });
     }
   }
-  //res.status(200).send(await Game.findOne());
+
 };
 
 // Maintain a list of clients (browsers) connected to the SSE stream

@@ -1,5 +1,4 @@
 import { createPlayer } from "./api.js";
-import { fetchAndDrawTable } from "./table.js";
 
 export async function handleCreatePlayer(uniqid) {
     const nameToAdd = document.getElementById("player-name-to-add");
@@ -10,7 +9,6 @@ export async function handleCreatePlayer(uniqid) {
     }
     console.log("what the fuc creating");
     await createPlayer({ name: nameToAdd.value, unique: uniqid});
-    //await fetchAndDrawTable(uniqid);
 
     nameToAdd.value = "";
 }

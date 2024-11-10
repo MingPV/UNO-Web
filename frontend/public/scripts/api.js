@@ -35,9 +35,6 @@ export async function deleteCard(id) {
 
 export async function updateCard(card) {
   console.log("updating")
-  // await fetch(`${BACKEND_URL}/games/update/${card}`, {
-  //   method: "POST",
-  // });
   await fetch(`${BACKEND_URL}/cards/update`, {
     method: "POST",
     headers: {
@@ -51,9 +48,6 @@ export async function updateCard(card) {
 
 export async function createTopCard(card) {
   console.log("TopCard", card);
-  // await fetch(`${BACKEND_URL}/tables/${card}`, {
-  //   method: "POST",
-  // });
 
   await fetch(`${BACKEND_URL}/tables/${card}`, {
     method: "POST",
@@ -111,9 +105,6 @@ export async function getGame() {
 
 export async function updateGame(game) {
   console.log("updating game")
-  // await fetch(`${BACKEND_URL}/games/update/${game}`, {
-  //   method: "POST",
-  // });
   await fetch(`${BACKEND_URL}/games/update`, {
     method: "POST",
     headers: {

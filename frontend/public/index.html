@@ -1,116 +1,104 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>UNO Game</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
 
-  <body>
-    <div class="big-con">
-      <div class="start-con">
-        <div class="info-con">
-          <!-- <label class="label">Welcome to Uno game ! </label> -->
-          <img
-            src="./scripts/assets/logo.png"
-            alt="Uno logo"
-            style="height: 20vh; width: 30vh"
-          />
-          <div class="add-player-con">
-            <input
-              id="player-name-to-add"
-              class="sub-add-player-con"
-              placeholder="enter your name ..."
-            />
-            <button id="add-player" onclick="">join</button>
-          </div>
+<head>
+  <meta charset="UTF-8" />
+  <title>UNO Game</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div class="big-con">
+    <div class="start-con">
+      <div class="info-con">
+        <img src="./scripts/assets/logo.png" alt="Uno logo" style="height: 20vh; width: 30vh" />
+        <div class="add-player-con">
+          <input id="player-name-to-add" class="sub-add-player-con" placeholder="enter your name ..." />
+          <button id="add-player" onclick="">join</button>
         </div>
       </div>
-
-      <div class="div1">
-        <div class="divhead">
-          <div class="notblurDivhead">
-            <div>
-              <div class="bg-image"></div>
-              <!-- <label class="init-label">New Game</label> -->
-              <div id="your-id">your uniq id:</div>
-              <button id="init-game" class="button-62">New Game</button>
-              <br />
-              <br />
-            </div>
-          </div>
-        </div>
-
-        <div class="divtop">
-          <div class="playerProfiles">
-            <h1>Players:</h1>
-
-            <table>
-              <thead id="main-table-head">
-                <!-- <h1>Player in Game</h1> -->
-              </thead>
-            </table>
-            <h1 id="game-res">Game State:</h1>
-            <div class="game-status">
-              <p class="topic">Current Player Turn :</p>
-              <div id="player-turn"></div>
-              <p class="topic">Game Direction :</p>
-              <div id="game-direction"></div>
-            </div>
-          </div>
-
-          <div
-            class="Topcardpage"
-            style="display: flex; flex-direction: column"
-          >
-            <!-- <div id="game-res"><span style="color:red;">game result: </span></div>
-              <div id="player-turn">current player turn: </div> -->
-            <!-- <div class="tool"> -->
-            <p>Top Card</p>
-            <table>
-              <tfoot id="main-table-foot"></tfoot>
-            </table>
-            <img id="topcard-image" style="width: 12rem" />
-            <!-- </div> -->
-
-            <!-- <div id="game-direction">Game direction: </div> -->
-          </div>
-        </div>
-
-        <div class="divbottom">
-          <div class="bottomnotblur">
-            <div class="gameButton">
-              <br />
-              <button id="add-newrow" class="button-74" role="button">
-                Draw Card
-              </button>
-              <br />
-              <br />
-              <button id="end-turn" class="button-74" role="button">
-                End Turn
-              </button>
-
-              <br />
-            </div>
-
-            <div class="mycard" style="display: flex; flex-direction: column">
-              <p>your cards :</p>
-              <table class="testtest">
-                <tbody id="main-table-body"></tbody>
-              </table>
-            </div>
-            <!-- <div class="justDetail">
-              <div id="deck-count">Number of cards in the deck: 0</div>
-              <div id="used-count">Number of cards used: 0</div>
-              <label class="card-deck">card deck, used deck</label>
-            </div> -->
-          </div>
-        </div>
-      </div>
-
-      <div class="big-text" id="ok-text"></div>
     </div>
 
-    <script type="module" src="scripts/main.js"></script>
-  </body>
+    <div class="div1">
+      <div class="divhead">
+        <div class="notblurDivhead">
+          <div>
+            <div class="bg-image"></div>
+            <div id="your-id">your uniq id:</div>
+            <button id="init-game" class="button-62">New Game</button>
+            <br />
+            <br />
+          </div>
+        </div>
+      </div>
+
+      <div class="divtop">
+        <div class="playerProfiles">
+          <h1 style="font-size: 1rem">Players:</h1>
+
+          <table>
+            <thead id="main-table-head" style="font-size: 0.7rem">
+            </thead>
+          </table>
+          <h1 id="game-res" style="font-size: 1rem">Game State:</h1>
+          <div class="game-status">
+            <p class="topic" style="font-size: 0.7rem">
+              Current Player Turn :
+            </p>
+            <div id="player-turn"></div>
+            <p class="topic" style="font-size: 0.7rem">Game Direction :</p>
+            <div id="game-direction"></div>
+          </div>
+        </div>
+
+        <div class="Topcardpage" style="display: flex; flex-direction: column">
+          <p>Top Card</p>
+          <table>
+            <tfoot id="main-table-foot"></tfoot>
+          </table>
+          <img id="topcard-image" style="width: 12rem" />
+        </div>
+      </div>
+
+      <div class="divbottom">
+        <div class="bottomnotblur">
+          <div class="gameButton" id="game-btn" style="display: flex;">
+            <br />
+            <button id="uno-btn" class="button-74" role="button">
+              Uno
+            </button>
+            <br />
+            <br />
+            <button id="add-newrow" class="button-74" role="button">
+              Draw Card
+            </button>
+            <br />
+            <br />
+            <button id="end-turn" class="button-74" role="button">
+              End Turn
+            </button>
+            <br />
+          </div>
+
+          <div class="mycard" style="display: flex; flex-direction: column">
+            <p>your cards :</p>
+            <table class="testtest">
+              <tbody id="main-table-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    
+  </div>
+  <div class="big-text" id="ok-text">
+    <div class="gameButton" id="game-btn" style="display: flex;">
+      <button id="end" class="button-74" role="button">Please press this to leave</button>
+    </div>
+  </div>
+  <script type="module" src="scripts/main.js"></script>
+</body>
+
 </html>
